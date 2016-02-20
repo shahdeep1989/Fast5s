@@ -1,0 +1,24 @@
+<div layout="row" class="login">
+  <div flex></div>
+  <md-card class="loginContent">
+    <form ng-submit="vm.login()" name="form">
+        <md-input-container class="md-icon-float md-block">
+            <label>Email</label>
+            <md-icon md-svg-src="images/ic_mail_black_24px.svg"></md-icon>
+            <input ng-model="vm.user.email" type="email" name="email" required>
+            <div ng-messages="form.email.$error">
+                <div ng-message="required">Email is required</div>
+                <div ng-message="email">Email is invalid</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Password</label>
+            <md-icon md-svg-src="images/ic_lock_black_24px.svg"></md-icon>
+            <input ng-model="vm.user.password" required type="password" name="password">
+        </md-input-container>
+        <md-button type='submit' class="md-raised md-primary row">Login</md-button>
+    </form>
+  </md-card>
+  <div flex></div>
+</div>
+
