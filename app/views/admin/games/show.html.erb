@@ -1,0 +1,65 @@
+<section class="content-header">
+  <h1>
+    Games
+    <small>Detail</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><%= link_to "<i class='fa fa-dashboard'></i> games".html_safe , admin_games_path  %></li>
+    <li class="active">Detail</li>
+  </ol>
+ </section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">
+              <%= link_to 'Edit', edit_admin_game_path(@game), class: "label label-primary" %>
+               <%= link_to "Back", :back, class: "label label-primary" %>
+            </h3>   
+        </div>
+        <div class="box-body">
+          <div class="table-responsive">
+            <div id="example_wrapper" class="dataTables_wrapper" role="grid">
+              <div class="dataTables_length" id="example_length">
+              </div>
+              <div id="example_filter" class="dataTables_filter pull-right">
+              </div>
+              <table aria-describedby="example_info" class="table table-bordered table-hover table-striped display dataTable" id="example">
+                <thead>
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  > Name</th>
+                    <td><%= @game.name %></td>
+                  </tr>
+              
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  >Game Type</th>
+                    <td><%= @game.game_type %></td>
+
+                  </tr>
+             
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  >Interval Sec</th>
+                     <td><%= @game.interval_sec %></td>
+
+                  </tr>
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  >Total Number In Ticket</th>
+                     <td><%= @game.total_number_in_ticket  %></td>
+
+                  </tr>    
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader">Number of Player</th>
+                     <td><%= @game.num_of_player %></td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</section>
+<br>
