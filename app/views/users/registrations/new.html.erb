@@ -1,29 +1,24 @@
-<h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="form-group has-feedback">
+    <%=f.email_field :email, autofocus: true, :class =>"form-control", :placeholder => "User name" %>
+    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+  <div class="form-group has-feedback">
+    <%= f.password_field :password, autocomplete: "off", :class =>"form-control", :placeholder => "Password" %>
+    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <div class="form-group has-feedback">
+    <%= f.password_field :password_confirmation, autocomplete: "off", :class =>"form-control", :placeholder => "Confirm Password" %>
+    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="row">
+    <div class="col-xs-8">
+    </div>
+    <div class="col-xs-4">        
+      <button type="submit" class="btn btn-success btn-block"><strong>Sign Up</strong></button>    
+    </div>
   </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+  <a href="<%=new_user_session_path %>" >Log In?</a>
+<% end %> 
