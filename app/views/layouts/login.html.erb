@@ -1,0 +1,28 @@
+
+ <!DOCTYPE html>
+<html>
+	<head>
+	  <title>Fast5s Housie</title>
+	  <%= stylesheet_link_tag  'admin', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body class="login-page">
+		<div class="login-box">
+      <div class="login-logo">
+        <a href="../../index2.html">Fast5s Housie</a>
+      </div><!-- /.login-logo -->
+      <div class="login-box-body">
+      	<!-- Arth, Different Pages, Same Layout, Different Headers -->
+      	<% if controller.controller_name == "sessions" %>
+        	<strong><p class="login-box-msg">Sign In</p></strong>
+        <% elsif controller.controller_name == "passwords" && controller.action_name == "new" %>
+        	<strong><p class="login-box-msg">Forgot Password</p></strong>
+        <% elsif controller.controller_name == "passwords" && controller.action_name == "edit" %>
+        	<strong><p class="login-box-msg">Change Password</p></strong>
+        <% end %>
+      	<%= yield %>
+      </div><!-- /.login-box-body -->
+    </div>
+	</body>
+</html>
