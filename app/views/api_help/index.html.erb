@@ -1,0 +1,72 @@
+<span class="left_panel">
+  <div class="table">
+    <%= render partial: 'index', locals: {index_arr: ApiIndexRenderer.user_api_index } %>
+  </div>  
+</span>
+<span class='right_panel'>  
+    <!-- Example <br>
+    email: test@yopmail.com<br>
+    password: 12345678<br>    -->         
+</span>
+
+<!-- Login Api -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Login', 
+        link_href: 'login',
+        link_method: 'POST',
+        original_link: api_login_path,
+        parameters: [
+          {name: 'email', description: 'Email Address of User', required: 1 },
+          {name: 'password', description: 'Password', required: 1},
+        ],
+        options: {}} %>
+
+
+  <%= render partial: 'api', locals: {
+        link_name: 'Update Profile', 
+        link_href: 'update_profile',
+        link_method: 'POST',
+        original_link: api_update_profile_path,
+        parameters: [  
+          {name: 'authentication_token', description: 'Authentication Token', required: 1},
+          {name: 'user[first_name]', description: 'First Name'},
+          {name: 'user[last_name]', description: 'Last Name'},
+        ],
+        options: {}} %> 
+<!-- Change Password Api -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Change Password', 
+        link_href: 'change_password',
+        link_method: 'POST',
+        original_link: api_change_password_path,
+        parameters: [
+          {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 },
+          {name: 'user[current_password]', description: 'Current Password', required: 1 },
+          {name: 'user[password]', description: 'New Password', required: 1 },
+          
+        ],
+        options: {}} %>
+
+ <!-- Forgot Password Api -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Forgot Password Api', 
+        link_href: 'forgot_password',
+        link_method: 'POST',
+        original_link: api_forgot_password_path,
+        parameters: [
+          {name: 'email', description: 'Email Address of User', required: 1 }
+        ],
+        options: {}} %>
+
+<!-- Logout -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Logout', 
+        link_href: 'logout',
+        link_method: 'GET',
+        original_link: api_logout_path,
+        parameters: [
+          {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 }
+            
+        ],
+        options: {}} %>     
+
