@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-  Rails.application.routes.draw do
+  
     devise_for :users, controllers: {
       sessions: 'users/sessions'
+      
     }
-  end
+ 
+	namespace :admin do
+      root 'dashboard#index'
+    end
+
+    root 'dashboard#index'
+
   get "api_help/index", :as => :api_help
   namespace :api, :defaults => {:format => 'json'} do
     scope :module => :v1 do
