@@ -8,129 +8,22 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header">Admin Panel</li>
-      <li id="dashboard_place">
-        <a href="<%#= admin_root_path %>">
-          <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!-- <small class="label pull-right bg-green">new</small> -->
-        </a>
-      </li>
+
       <li class="treeview">
-        <a href="#">
-          <i class="fa fa-group"></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-
-        <ul class="treeview-menu">
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Patients".html_safe , admin_patients_path  %> </li>
-
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Clinicians".html_safe , admin_clinicians_path  %>
-          </li>
-
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Physicians".html_safe , admin_physicians_path  %>
-          </li>
-
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Care Givers".html_safe , admin_caregivers_path %>
-          </li>
-
-           <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Nurses".html_safe , admin_nurses_path %>
-          </li>
-
-         <!--  <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> HomeHealthRn".html_safe , admin_home_health_rns_path %>
-          </li>  -->
-
-
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Care-Coordinator".html_safe , admin_care_coordinators_path %>
-          </li>
-
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Pharmacist".html_safe , admin_pharmacists_path %>
-          </li>
-
-          <% if session[:role] == "super_admin" %>
-            <li><a href="<%#= admin_admins_path %>"><i class='fa fa-circle-o'></i> Admin </a></li>
-          <% end %>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-files-o"></i>
-          <span>Admin Functions</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i>  Required Fields".html_safe , admin_required_registrations_path  %>
-          </li>
-          <li><a href="<%#= admin_password_resets_path %>"><i class="fa fa-circle-o"></i> Password Reset</a></li>
-          <li><a href="#"><i class="fa fa-circle-o"></i> Compliance Edits</a></li>
-          <li><%#= link_to "<i class='fa fa-circle-o'></i>  Reward Program Edits".html_safe , admin_rewards_path  %> </li>
-          <li>
-            <%#= link_to "<i class='fa fa-circle-o'></i> Audit Log".html_safe , admin_audit_logs_path  %>
-          </li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Drugs".html_safe , admin_drugs_path  %>
-          </li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Diagnoses".html_safe , admin_diagnoses_path  %>
-          </li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Hospital".html_safe , admin_hospitals_path  %>
-          </li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Pharmacy".html_safe , admin_pharmacies_path  %>
-          </li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> Speciality".html_safe , admin_specialities_path  %>
-          </li>
-          <%# if current_user.admin? %>
-            <%# if current_user.admin.can_create_note.present? %>
-              <li>
-                <%#= link_to "<i class='fa fa-circle-o'></i> Note".html_safe , admin_notes_path %>
-              </li>
-            <%# end %>
-          <%# end %>
-          <%# if session[:role] == "super_admin" %>
-            <li>
-              <%#= link_to "<i class='fa fa-circle-o'></i> Note".html_safe , admin_notes_path %>
-            </li>
-          <%# end %>
-        </ul>
-      </li>
-      <!-- <li>
-        <a href="pages/widgets.html">
-          <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
-        </a>
-      </li> -->
-      <li class="treeview">
-        <a href="#">
+        <a href="<%= admin_root_path %>">
           <i class="fa fa-medkit"></i>
-          <span>Pill Box Settings</span>
-          <i class="fa fa-angle-left pull-right"></i>
+          <span>Games</span>
         </a>
-        <ul class="treeview-menu">
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i> PillBox".html_safe , admin_pill_boxes_path  %>
-          </li>
-          <li><a href="#"><i class="fa fa-circle-o"></i> Locate Pill Boxes</a></li>
-          <li>
-          <%#= link_to "<i class='fa fa-circle-o'></i>Pill Box with Patient".html_safe , assign_patient_admin_pill_boxes_path  %>
-          </li>
-         <li><a href="#"><i class="fa fa-circle-o"></i> Sim Card Settings</a></li>
-        </ul>
+
       </li>
       <li>
         <a href="#">
-          <i class="fa fa-heartbeat"></i> <span>Compliance Report</span> <!-- <small class="label pull-right bg-green">new</small> -->
+          <i class="fa fa-heartbeat"></i> <span>Players</span> <!-- <small class="label pull-right bg-green">new</small> -->
         </a>
       </li>
       <li>
         <a href="<%#= admin_care_team_toolboxes_path %>">
-          <i class="fa fa-stethoscope"></i> <span>Care Team Toolbox Settings</span> <!-- <small class="label pull-right bg-green">new</small> -->
+          <i class="fa fa-stethoscope"></i> <span>Winners</span> <!-- <small class="label pull-right bg-green">new</small> -->
         </a>
       </li>
     </ul>
