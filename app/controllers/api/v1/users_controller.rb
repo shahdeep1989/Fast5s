@@ -3,11 +3,13 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 	def sign_up
   	@user = User.new(user_create_params)
+    if params[:avatar].present?
+      @user.decode_image_to_image_data(params[:avatar])
+    end
     if @user.save
   		@authentication_token = @user.authentication_tokens.create(:auth_token => AuthenticationToken.generate_unique_token)
-      @user.check_duplicate_device_ids(params[:user][:device_token],@user,params[:user][:device_type]) 
     else
-  		render_json({:result=>{:messages => @user.display_errors, :rstatus=>0, :errorcode => 404}}.to_json)
+  		render_json({:result=>{:messages => @user.errors.full_messages, :rstatus=>0, :errorcode => 404}}.to_json)
   	end
   end
 
@@ -15,7 +17,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     @user = User.authenticate_user_with_auth(params[:email], params[:password])
     if @user.present?
       @authentication_token = @user.authentication_tokens.create(:auth_token => AuthenticationToken.generate_unique_token)
-      @user.check_duplicate_device_ids(params[:device_token],@user,params[:device_type])
       render :file => "api/v1/users/sign_up"
     else
       render_json({:result=>{:messages => User.invalid_credentials,:rstatus=>0, :errorcode => 404}}.to_json)
@@ -26,7 +27,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     @token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
     if @token.present?
       @token.destroy
-      @current_user.device_token = nil
       render_json({:result=>{:messages =>"ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"Logout Successfully!"}}.to_json)
     else
       render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
@@ -35,10 +35,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def update_profile
     if params[:user].present?
-      
       unless @current_user.update_attributes(user_edit_params)
-        render_json({:result=>{:messages => @current_user.display_errors, :rstatus=>0, :errorcode => 404}}.to_json)
+        puts "============Updated=======#{@current_user.inspect}"
+        render_json({:result=>{:messages => @current_user.errors.full_messages, :rstatus=>0, :errorcode => 404}}.to_json)
       end
+      @user = @current_user
     else
       render_json({:result=>{:messages =>"User param missing",:rstatus=>0, :errorcode => 404}}.to_json)
     end
