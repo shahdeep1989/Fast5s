@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	  <title>MedGenie</title>
+	  <meta name="viewport" content="width=device-width">
+	  <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
+	  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+	  <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
+	</head>
+	<body class="skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<%= render 'layouts/admin/header'  %>
+			<%= render 'layouts/admin/left_sidebar' %>
+
+			<div class="content-wrapper" style="min-height: 916px;">
+
+			<%= yield %>
+			</div>
+
+		<%= render 'layouts/admin/footer' %>
+		</div>
+	<script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+	</body>
+</html>
