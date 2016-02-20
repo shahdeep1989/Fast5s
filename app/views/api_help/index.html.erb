@@ -9,6 +9,22 @@
     password: 12345678<br>    -->         
 </span>
 
+<!-- Sign Up -->
+
+<%= render partial: 'api', locals: {
+        link_name: 'Sign Up', 
+        link_href: 'sign_up',
+        link_method: 'POST',
+        original_link: api_signup_path,
+        parameters: [
+          {name: 'user[email]', description: 'Email Address of User', required: 1 },
+          {name: 'user[password]', description: 'Password', required: 1},
+          {name: 'user[first_name]', description: 'First Name', required: 0 },
+          {name: 'user[last_name]', description: 'Last Name', required: 0},
+          {name: 'avatar', description: 'Avatar', required: 0},
+        ],
+        options: {}} %>
+
 <!-- Login Api -->
   <%= render partial: 'api', locals: {
         link_name: 'Login', 

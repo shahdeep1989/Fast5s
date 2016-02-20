@@ -8,6 +8,7 @@ class Api::V1::BaseController < ActionController::Base
 
   def authentication_user_with_authentication_token
     @current_user = AuthenticationToken.find_user_from_authentication_token(params[:authentication_token])
+    puts "========Current User===========#{@current_user.inspect}"
     unless @current_user.present?
       render_json({:result=>{:messages => "You required to register or login before continue to this action!",:rstatus=>0, :errorcode => 401}}.to_json)
     end
