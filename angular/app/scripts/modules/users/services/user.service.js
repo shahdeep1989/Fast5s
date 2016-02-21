@@ -83,6 +83,7 @@
                 data:data,
                 url:'update_profile'
             }).success(function(data){
+                data.data.auth_token = $rootScope.user.auth_token
                 setProfile(data);
             })
         }
