@@ -20,8 +20,7 @@
  *= require style
  *= require_self
  *= require bootstrap-colorpicker
-
- * require intlTelInput
+ *= require select2.min
  */
 
 
