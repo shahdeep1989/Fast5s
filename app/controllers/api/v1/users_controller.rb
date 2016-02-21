@@ -3,6 +3,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 	def sign_up
   	@user = User.new(user_create_params)
+    @user.user_type = 2
     if params[:avatar].present?
       @user.decode_image_to_image_data(params[:avatar])
     end
