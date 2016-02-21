@@ -17,3 +17,5 @@
 // require markerclusterer
 //= require_self
 //= require app.min
+//= require bootstrap-colorpicker
+//= require jquery_nested_form

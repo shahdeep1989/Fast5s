@@ -1,0 +1,19 @@
+<div class="form-group">
+  <label><%= f.label :text_panel%></label>
+  <%= f.text_field :text_panel, :class => "form-control" %>
+</div>
+<div class="form-group">
+  <label><%= f.label "Number Of Element" %></label>
+  <%= f.number_field :num_of_element , :class => "form-control"  %>
+</div>
+
+<div class="form-group">
+ <label><%= f.label "Color" %></label>
+   <%= f.text_field :part_color, :class => "form-control part_color" %>
+</div>
+
+<%= f.link_to_remove "Remove this WinningPart" %>
+
+<script type="text/javascript">
+      $(".part_color").colorpicker();
+</script>
