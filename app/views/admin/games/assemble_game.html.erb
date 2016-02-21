@@ -53,8 +53,10 @@
             <% end %>  
           </div>
           <% @game.winning_parts.each do |parts| %>
+           <%= hidden_field_tag parts.id , ""%>
             <% (1..parts.num_of_element).to_a.each do %>
-              <div class="dragme" title="drag-and-drop image script" draggable="true" style="background:<%= parts.part_color %>;"> </div>
+              <div class="dragme <%parts.id %>" title="drag-and-drop image script" draggable="true" style="background:<%= parts.part_color %>;"> </div>
+             
             <% end %>
           <% end %>
         </div>
@@ -73,6 +75,19 @@
 
         function saveElementPosition(){
           alert("Save");
+          
+          <% @game.winning_parts.each do |parts| %>
+          var arr_cords = []
+              $('.dragme <% parts.id%>').each(function(i, obj) {
+              //test
+              arr_cords.push([obj.offsetLeft,obj.offsetTop])
+              console.log("offset left" +obj.offsetLeft)
+              console.log("offset right" +obj.offsetTop)
+              //alert(arr_cords)
+              $("#<%=parts.id %>").val = arr_cords
+            });
+          <% end %>
+         
         }
 
         /*
@@ -101,7 +116,8 @@
             // IE uses srcElement, others use target
             var targ = e.target ? e.target : e.srcElement;
 
-            if (targ.className != 'dragme') {return};
+            //if (targ.className != 'dragme') {return};
+            if (!targ.className.includes('dragme')) {return};
             // calculate event X, Y coordinates
                 offsetX = e.clientX;
                 offsetY = e.clientY;
