@@ -19,6 +19,8 @@ class ApiIndexRenderer
       index_arr << ApiIndexRenderer.new("Forgot Password Api", "forgot_password", "POST")
       index_arr << ApiIndexRenderer.new("Get Game List", "get_game_list", "GET")
       index_arr << ApiIndexRenderer.new("Search Game", "search_game", "GET")
+      index_arr << ApiIndexRenderer.new("Get Next Game Number", "get_next_game_number", "POST")
+    
       index_arr
     end
   end
