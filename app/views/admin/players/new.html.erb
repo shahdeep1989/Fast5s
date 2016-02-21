@@ -1,0 +1,15 @@
+<section class="content-header">
+  <h1>
+  	Player
+    <small>New</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><%= link_to "<i class='fa fa-files-o'></i> Admin Game".html_safe , "#"  %></li>
+    <li><%= link_to "<i class='fa fa-stethoscope'></i> Players".html_safe , admin_players_path  %></li>
+    <li class="active">New</li>
+  </ol><br />
+  <%= render "shared/error_messages" %>
+</section>
+<section class="content">
+	<%= render 'form' %>
+</section>

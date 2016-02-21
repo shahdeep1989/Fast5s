@@ -9,6 +9,7 @@ Rails.application.routes.draw do
  
 	  namespace :admin do
       root 'dashboard#index'
+      resources :players
       resources :games do
         member do
           get 'assemble_game'
