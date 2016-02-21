@@ -76,21 +76,28 @@ class Api::V1::GamesController < Api::V1::BaseController
 	def get_next_game_number
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
-			@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
-			if @room.present?
-				if @room.num_array_to_pass.present?
-					if params[:current_head].to_i == 100	
- 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
- 					else
-						@number = @room.num_array_to_pass[params[:current_head].to_i]
-						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)		
- 					end
- 				else
-					render_json({:errors => "Please wait for some time to get the next number"}.to_json)
-				end
+			@tickets = Ticket.where(:room_id => params[:room_id])
+			if @tickets.count == 1
+				@tickets.first.room.update_attributes(:status => "Active")
+				render_json({:result=>{:errors => "Please wait for sometime as you are the only one player."}}.to_json)
 			else
-				render_json({:errors => "sorry room is not found"}.to_json)
-			end
+				@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
+				if @room.present?
+					if @room.num_array_to_pass.present?
+						if params[:current_head].to_i == 100	
+	 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
+	 					else
+							@number = @room.num_array_to_pass[params[:current_head].to_i]
+							render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)		
+	 					end
+	 				else
+						render_json({:result=>{:errors => "Please wait for some time to get the next number"}}.to_json)
+					end
+				else
+					render_json({:result=>{:errors => "sorry room is not found"}}.to_json)
+				end
+			end 
+
 		else
 			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
 		end
