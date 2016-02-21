@@ -36,16 +36,4 @@ angular
         checkAuth:true,
         controllerAs: 'vm'
     })
-    .state('logout', {
-        url: "/logout",
-        template:' ',
-        resolve:{
-            logout:['userService',function(userService){
-                return userService.logout();
-            }]
-        },
-        onEnter:['$state',function($state){
-            $state.go('login');
-        }]
-    })
 }]);

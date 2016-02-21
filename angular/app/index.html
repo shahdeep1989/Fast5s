@@ -30,7 +30,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <md-toolbar class="header">
+    <md-toolbar class="header" ng-cloak>
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings">
           <md-icon md-svg-icon="images/ic_menu_black_24px.svg"></md-icon>
@@ -42,32 +42,32 @@
         <!--<md-button class="md-icon-button" aria-label="More">-->
         <!--    <md-icon md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>-->
         <!--</md-button>-->
-        <md-menu md-position-mode="target-right target" >
+        <md-menu md-position-mode="target-right target">
             <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
                 <md-icon md-menu-origin md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>
             </md-button>
-            <md-menu-content width="4" >
+            <md-menu-content width="4" class="header-menu">
                 <md-menu-item>
                     <md-button ui-sref="editProfile">
                         <div layout="row" flex>
-                            <p flex>Edit Profile</p>
-                            <md-icon md-menu-align-target md-svg-icon="images/ic_create_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <md-icon md-menu-align-target md-svg-icon="images/ic_create_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <p flex>Edit Profile</p>
                         </div>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ui-sref="changePassword">
                         <div layout="row" flex>
-                            <p flex>Change Password</p>
-                            <md-icon md-menu-align-target md-svg-icon="images/ic_lock_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <md-icon md-menu-align-target md-svg-icon="images/ic_lock_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <p flex>Change Password</p>
                         </div>
                     </md-button>
                 </md-menu-item>
-                <md-menu-item>
-                    <md-button ui-sref="logout">
+                <md-menu-item ng-controller="loginCtrl as vm">
+                    <md-button ng-click="vm.logout()">
                         <div layout="row" flex>
-                            <p flex>Logout</p>
-                            <md-icon md-menu-align-target md-svg-icon="images/ic_input_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <md-icon md-menu-align-target md-svg-icon="images/ic_input_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                          <p flex>Logout</p>
                         </div>
                     </md-button>
                 </md-menu-item>
@@ -134,7 +134,6 @@
         <script src="scripts/services/http/app-http.service.js"></script>
         <script src="scripts/services/http/pending-requests.service.js"></script>
         <script src="scripts/component/compareTo.js"></script>
-        <script src="scripts/component/ticket.js"></script>
         <!-- endbuild -->
 </body>
 </html>

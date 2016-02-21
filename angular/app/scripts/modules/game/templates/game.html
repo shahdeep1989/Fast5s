@@ -2,7 +2,17 @@
   <section layout="row" flex>
     <md-content flex layout-padding>
       <div layout="column" layout-fill layout-align="top center">
-        <ticket image="vm.image" coords="vm.coords"></ticket>
+        <!--<ticket image="vm.image" coords="vm.coords" class="ticket"></ticket>-->
+        <div class="ticket">
+          <img ng-src="{{vm.image}}" style='height:600px;width:600px'>
+          <md-button ng-repeat="coord in vm.coords"
+                     ng-class="coord.isSelected?'md-primary':'md-hue-2'"
+                     ng-click="coord.isSelected = !coord.isSelected"
+                     class="md-fab md-mini md-primary ticketNumber"
+                     style="{{'top:'+coord.y+'px;left:'+coord.x+'px'}}">
+            {{coord.number}}
+          </md-button>
+        </div>
       </div>
       <div flex></div>
     </md-content>

@@ -1,6 +1,6 @@
 <div ng-cloak>
     <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="n in [1,2,3]">
+        <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="game in vm.games">
             <md-card style="background:rgb(230, 230, 230)">
                 <md-card-header>
                     <md-card-avatar>
@@ -14,14 +14,17 @@
                 <img ng-src="{{vm.imagePath}}" class="md-card-image" alt="Washed Out">
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-headline">In-card actions</span>
-                        <span class="md-subhead">ButerFly Housie will be devided in three parts with tail, head and body</span>
+                        <span class="md-headline">{{game.name}}</span>
+                        <span class="md-subhead">{{game.name}}</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
-                    <md-button class="md-raised md-warn" ui-sref="game">Play this</md-button>
+                    <md-button class="md-raised md-warn" ui-sref="game({id:game.id})">Play this game</md-button>
                 </md-card-actions>
             </md-card>
+        </div>
+        <div class="" ng-if="$root.errorMessage">
+            {{$root.errorMessage}}
         </div>
     </md-content>
 </div>

@@ -23,7 +23,7 @@
             editProfile:editProfile,
             logout:logout
         };
-        
+
         function login(data){
             data.defaultError = 'Getting error in login';
             return appHttp.callApi({
@@ -33,7 +33,7 @@
                 setProfile(data);
             })
         }
-        
+
         function changePassword(data){
             data.defaultError = 'Error in updating the password';
             return appHttp.callApi({
@@ -42,7 +42,7 @@
                 successToast:true
             })
         }
-        
+
         function signup(data){
             data.defaultError = 'Getting error in signup';
             return appHttp.callApi({
@@ -52,7 +52,7 @@
                 setProfile(data);
             })
         }
-        
+
         function forgotPassword(data){
             data.defaultError = 'Error in updating the password';
             return appHttp.callApi({
@@ -61,13 +61,13 @@
                 successToast:true
             })
         }
-        
+
         function setProfile(data){
             $rootScope.user = data.data;
             $localStorage.user = data.data;
             $state.go('home');
         }
-        
+
         function checkAuth(){
             if($localStorage.user){
                 return true;
@@ -76,7 +76,7 @@
                 return false;
             }
         }
-        
+
         function editProfile(data){
             data.defaultError = 'Getting error in edit profile';
             return appHttp.callApi({
@@ -86,7 +86,7 @@
                 setProfile(data);
             })
         }
-        
+
         function logout(){
             var deffered = $q;
             appHttp.callApi({
@@ -96,6 +96,7 @@
             }).finally(function(){
                 delete $rootScope.user;
                 delete $localStorage.user;
+                $state.go('login');
                 deffered.resolve();
             });
             return deffered;

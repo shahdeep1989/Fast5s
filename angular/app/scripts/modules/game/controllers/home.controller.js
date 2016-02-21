@@ -14,6 +14,13 @@
     homeCtrl.$inject = ['gameService'];
     function homeCtrl(gameService) {
         var vm = this;
-        vm.imagePath = 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png';
+        vm.games = [];
+        vm.imagePath = 'https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg';
+        activate();
+        function activate(){
+          gameService.getGames({}).success(function (data) {
+            vm.games = data.data;
+          });
+        }
     }
 })();
