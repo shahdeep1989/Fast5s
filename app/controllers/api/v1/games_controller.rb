@@ -17,38 +17,46 @@ class Api::V1::GamesController < Api::V1::BaseController
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
 			@game = Game.find(params[:game_id])
-			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 10.minutes, true)
+			limit = 0
+			limit = @game.winning_parts.map(&:num_of_element).inject(0){|sum,x| sum+x}
+			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 5.minutes, "Active")
 			if @rooms.present?
-				if @room.tickets.count < game.num_of_player # check total maximum player in room 
-					@room.tickets.build(:user_id => @current_user.id ,:num_array => @room.num_array_to_pass.shuffle)
-				else	
-					generate_rooms
-        end
+				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
+				@room = @rooms.first
+				@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+				@ticket.save
+				puts "==================Ticket=========#{@ticket.inspect}"
+				if @rooms.first.tickets.count == @game.num_of_player
+					@rooms.first.status = "Deactive"
+					@rooms.first.save
+					@room = @rooms.first
+				end
 			else
+				puts "===============+New Room+=================="
         generate_rooms
+        @ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+        @ticket.save
+        puts "==================Ticket=========#{@ticket.inspect}"
 			end
 		else	
 		end
 	end
 
-	def generate_tickets(limit, max_number)
+	def generate_tickets(limit)
 		numbers = []
 		loop do
-      x = rand(max_number)
+			break if numbers.size == limit
+      x = rand(99)
       unless numbers.include? x
       	numbers << x
       end
-      break if numbers.size == limit
     end
     return numbers
 	end	
 
 	def generate_rooms
-		if @game.game_type == 1 # numbers in ticket
-			nums = @game.total_number_in_ticket.times.map{Random.rand(99) }
-		elsif @game.game_type == 2 # alphabates in ticket
-			nums = @game.total_number_in_ticket.times.map { (65 + rand(26)).chr }
-		end	
-		game.rooms.build(:num_array_to_pass => nums)
+		@room = @game.rooms.build(status: "Active")
+		@room.save
+		return @room
 	end	
 end
