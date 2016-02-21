@@ -9,7 +9,7 @@ json.data do
     	json.id game.id
     	json.name game.name
     	json.number_of_player game.num_of_player
-      json.game_image game.game_image.url
+      json.game_image  Rails.application.secrets.host+game.game_image.url
     end
   end
 end
