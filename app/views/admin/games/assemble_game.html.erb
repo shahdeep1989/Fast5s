@@ -45,7 +45,7 @@
 <!--          <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
  title="drag-and-drop image script" class="dragme" id="img1Id"> -->
           <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
- title="drag-and-drop image script" id="img1Id"  style="float:left; width:70%;">
+ title="drag-and-drop image script" id="img1Id"  style="float:left; max-width:600px;">
         <%= form_tag store_winning_part_cord_admin_winning_parts_path , :id => "store_cords" do %>
           <div style="float:left; width:30%;">
             <% @game.winning_parts.each do |parts| %>
