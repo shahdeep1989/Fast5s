@@ -58,7 +58,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 	end	
 
 	def generate_rooms
-		number_of_array = (0..99).to_a.shuffle
+		number_of_array = (0..10).to_a.shuffle
 		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes , num_array_to_pass: number_of_array)
 		@room.save
 		# scheduler.at @room.deactivation_time do
@@ -78,8 +78,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 		if @token.present?
 			@tickets = Ticket.where(:room_id => params[:room_id])
 			if @tickets.count == 1
-				@tickets.first.room.update_attributes(:status => "Active")
-				render_json({:result=>{:errors => "Please wait for sometime as you are the only one player."}}.to_json)
+				@tickets.first.room.update_attributes(:status => "Active", deactivation_time: Time.now + 2.minutes)	
+				render_json({:result=>{:errors => "Please wait for sometime as you are the only one player.", :game_start_time => @tickets.first.room.deactivation_time}}.to_json)
 			else
 				@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
 				if @room.present?
