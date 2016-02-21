@@ -15,6 +15,8 @@
     function gameService(appHttp,$localStorage,$rootScope,$state,$q) {
         return {
              getGames:getGames,
+             getTicket:getTicket,
+             getNumber:getNumber
             // requestJoin:requestJoin,
             // getStatus:getStatus
         };
@@ -26,6 +28,24 @@
                 method:'GET',
                 url:'get_game_list'
             })
+        }
+
+        function getTicket(data){
+            data.defaultError = 'Error in getting the ticket';
+            return appHttp.callApi({
+                data:data,
+                method:'GET',
+                url:'search_game?game_id='+data.game_id
+            });
+        }
+
+        function getNumber(data){
+            data.defaultError = 'Error in getting the number';
+            return appHttp.callApi({
+                data:data,
+                method:'GET',
+                url:'getNumber'
+            });
         }
     }
 })();

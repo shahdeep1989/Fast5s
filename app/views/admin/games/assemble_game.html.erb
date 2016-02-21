@@ -35,18 +35,18 @@
 
   <br />
 </section>
-
 <section class="content">
 <div class="row">
   <div class="col-md-12">
     <div class="box box-primary">
-
+      
       <div class="box-header">
         <div class="box-body" id="boardId" >
 <!--          <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
  title="drag-and-drop image script" class="dragme" id="img1Id"> -->
           <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
  title="drag-and-drop image script" id="img1Id"  style="float:left; width:70%;">
+        <%= form_tag store_winning_part_cord_admin_winning_parts_path , :id => "store_cords" do %>
           <div style="float:left; width:30%;">
             <% @game.winning_parts.each do |parts| %>
                 <div class="elementCls" style="background:<%= parts.part_color %>;width:20%;float:left;margin-bottom:10px;"> </div> <span style="width:80%;float:left;height:40px;margin-bottom:10px;padding-left:10px;"> Set in <%= parts.text_panel %> </span> 
@@ -59,13 +59,18 @@
              
             <% end %>
           <% end %>
+          <% end %>
         </div>
         <!-- 
           <a href="#" onclick="addElement(this.id)" id="red" > Add Element Red </a>
           <a href="#" onclick="addElement(this.id)" id="green" > Add Element Green </a>
         -->
       </div>
-      <a href="#" onclick="saveElementPosition()"> Save </a>
+      <div class="text-center pad-btm-20">
+        <button type="button" onclick="saveElementPosition()" class="btn btn-primary">Save</button> 
+      <%#=button_to "Save" ,:class=> "btn btn-primary txt-center",:onclick => "saveElementPosition()"  %>
+      </div>
+    
     </div>
   </div>
 </div>
@@ -77,21 +82,23 @@
           alert("Save");
           
           <% @game.winning_parts.each do |parts| %>
-            var arr_cords = []
+            var arr_cords = new Array();
               $('.dragme.<%= parts.id %>').each(function(i, obj) {
                 //test
                 arr_cords.push([obj.offsetLeft,obj.offsetTop])
-                console.log("offset left" +obj.offsetLeft)
-                console.log("offset right" +obj.offsetTop)
+                
+                //console.log("offset left" +obj.offsetLeft)
+                //console.log("offset right" +obj.offsetTop)
                 //alert(arr_cords)
                 //alert("#<%=parts.id %>");
                 //$("#<%=parts.id %>").val = arr_cords
 
               });
               hiddenFields = document.getElementById("<%= parts.id %>");
+              alert(arr_cords)
               hiddenFields.value = arr_cords
           <% end %>
-         
+          $("#store_cords").submit();
         }
 
         /*

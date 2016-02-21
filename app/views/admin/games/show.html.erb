@@ -17,6 +17,7 @@
             <h3 class="box-title">
               <%= link_to 'Edit', edit_admin_game_path(@game), class: "label label-primary" %>
                <%= link_to "Back", :back, class: "label label-primary" %>
+               <%= link_to 'Set Element', assemble_game_admin_game_path(@game.id) , class: "label label-primary" %>
             </h3>   
         </div>
         <div class="box-body">
@@ -28,6 +29,10 @@
               </div>
               <table aria-describedby="example_info" class="table table-bordered table-hover table-striped display dataTable" id="example">
                 <thead>
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader" class="ver-align-top">Image</th>
+                     <td><%=image_tag @game.game_image %></td>
+                  </tr>
                   <tr role="row">
                     <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  > Name</th>
                     <td><%= @game.name %></td>
@@ -42,6 +47,15 @@
                   <tr role="row">
                     <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader">Number of Player</th>
                      <td><%= @game.num_of_player %></td>
+                  </tr>
+
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader" class="ver-align-top">Winning Parts</th>
+                     <td>
+                        <% @game.winning_parts.each do  |winning_part| %>
+                          <%=winning_part.text_panel %><br/>
+                        <% end %>
+                     </td>
                   </tr>
                 </thead>
               </table>

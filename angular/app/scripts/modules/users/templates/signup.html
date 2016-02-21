@@ -1,6 +1,7 @@
 <div layout="row" class="login" ng-cloak>
   <div flex></div>
   <md-card class="loginContent">
+    <h1>{{vm.editMode?'Edit Profile':'Sign Up'}}</h1>
     <form ng-submit="vm.editMode?vm.editProfile():vm.signup()" name="form">
         <md-input-container class="md-icon-float md-block">
             <label>First Name</label>
