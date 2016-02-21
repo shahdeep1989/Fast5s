@@ -51,6 +51,10 @@ class  Admin::GamesController <  Admin::BaseController
     redirect_to admin_games_path, notice: 'Game was successfully destroyed.'
   end
 
+  def assemble_game
+    #redirect_to assemble_game_admin_game_path(params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game

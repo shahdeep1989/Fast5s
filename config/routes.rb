@@ -9,7 +9,12 @@ Rails.application.routes.draw do
  
 	  namespace :admin do
       root 'dashboard#index'
-      resources :games
+      resources :games do
+        member do
+          get 'assemble_game'
+        end  
+      end  
+      #get 'games/:id/assemble_game' => "games#assemble_game"
     end
 
     root 'dashboard#index'
