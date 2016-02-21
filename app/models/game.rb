@@ -1,4 +1,7 @@
 class Game < ActiveRecord::Base
+
+	# game_type : 1 for characters and game_type : 2 for numbers 
+
 	has_many :rooms ,:dependent => :destroy
 	has_many :winning_parts ,:dependent => :destroy
 
