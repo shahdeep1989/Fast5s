@@ -130,7 +130,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 				if dispyed_elements.include?element
 					if index == elements_to_find -1
 						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id])
-						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }.to_json)		
+						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)		
 					end	
 				else
 					break
