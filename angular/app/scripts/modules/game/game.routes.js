@@ -7,12 +7,14 @@ angular
         url: "/home",
         templateUrl: "scripts/modules/game/templates/home.html",
         controller: 'homeCtrl',
-        controllerAs: 'home'
+        controllerAs: 'vm',
+        checkAuth:true
     })
     .state('game', {
         url: "/game",
         templateUrl: "scripts/modules/game/templates/game.html",
         controller: 'gameCtrl',
-        controllerAs: 'game'
+        controllerAs: 'vm',
+        checkAuth:true
     })
 }]);

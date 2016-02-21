@@ -2,4 +2,34 @@
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+
+$primary_color:#106CC8;
+$error_color:#DD2C00;
+
 @import "users/users.scss";
+.header{
+    svg{
+        fill:white;
+    }
+}
+
+.loader{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    background: rgba(130, 130, 130, 0.55);
+    .spinner{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -48px;
+        margin-left: -48px;
+    }
+}
+
+// .md-primary{
+//     background-color:$primary_color !important;
+// }

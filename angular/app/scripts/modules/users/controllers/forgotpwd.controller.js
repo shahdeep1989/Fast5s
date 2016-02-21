@@ -2,12 +2,22 @@
 
 /**
  * @ngdoc function
- * @name housyApp.controller:forgotPwdCtrl
+ * @name housyApp.controller:editProfileCtrl
  * @description
- * # forgotPwdCtrl
+ * # editProfileCtrl
  * Controller of the housyApp
  */
-angular.module('housyApp')
-  .controller('forgotPwdCtrl', function () {
-     console.log('forgotPwdCtrl controller');
-  });
+(function(){
+    angular
+    .module('housyApp')
+    .controller('forgotPasswordCtrl',forgotPasswordCtrl);
+    forgotPasswordCtrl.$inject = ['userService'];
+    function forgotPasswordCtrl(userService) {
+        var vm = this;
+        vm.user = {};
+        vm.forgotPassword = forgotPassword;
+        function forgotPassword(){
+            userService.forgotPassword(vm.user)
+        }
+    }
+})();

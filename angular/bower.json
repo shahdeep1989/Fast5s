@@ -11,7 +11,9 @@
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "angular-material": "^1.0.5",
-    "angular-ui-router": "^0.2.18"
+    "angular-ui-router": "^0.2.18",
+    "ng-lodash": "^0.4.0",
+    "ngstorage": "^0.3.10"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
