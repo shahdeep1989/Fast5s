@@ -12,8 +12,38 @@
    <%= f.text_field :part_color, :class => "form-control part_color" %>
 </div>
 
-<%= f.link_to_remove "Remove this WinningPart" %>
-
+<div class="remove_link">
+	<%= f.link_to_remove "Remove this WinningPart" ,:onclick => "remove_remove_link()"%>
+</div>
 <script type="text/javascript">
       $(".part_color").colorpicker();
+</script>
+
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+    remove_count += 1
+    if (remove_count == 1)
+    {
+      $(".remove_link").hide();
+    }
+    else
+    {
+      $(".remove_link").show();
+    }
+   }); 
+function remove_remove_link(){
+  
+  remove_count = remove_count - 1;
+  if (remove_count == 1)
+  {
+    $(".remove_link").hide();
+  }
+  else
+  {
+    $(".remove_link").show();
+  }
+}
+
 </script>
