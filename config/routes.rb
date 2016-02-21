@@ -37,9 +37,9 @@ Rails.application.routes.draw do
       post 'change_password' => 'users#change_password'
       post 'forgot_password'   => 'users#forgot_password'
       get 'get_game_list' => 'games#get_list', :as => :get_game_list
-      get 'search_game' => 'games#search_game', :as => :search_game
       post 'get_next_game_number' => 'games#get_next_game_number' , :as => :get_next_game_number  
       post 'get_room_user_list' => 'games#get_room_user_list' , :as => :get_room_user_list 
+      post 'checking_winning_part' => 'games#checking_winning_part' , :as => :checking_winning_part
     end
   end
 end

@@ -119,4 +119,28 @@ class Api::V1::GamesController < Api::V1::BaseController
 
 	end  
 
+	def checking_winning_part
+		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
+		if @token.present?
+			elements_to_find = params[:elemets]
+			current_index = params[:index]
+			dispyed_elements = Room.find(params[room_id]).num_array_to_pass[0..current_index]
+			winning_part = winning_part.find(params[:winning_part_id])
+			elements_to_find.each_with_index do |element,index|
+				if dispyed_elements.include?element
+					if index == elements_to_find -1
+						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id])
+						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }.to_json)		
+					end	
+				else
+					break
+					render_json({:errors => "Winning part not completed properly"}.to_json)
+				end	
+			end	
+			
+		else
+			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+		end
+	end	
+
 end
