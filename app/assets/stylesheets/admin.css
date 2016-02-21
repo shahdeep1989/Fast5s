@@ -23,3 +23,9 @@
 
  * require intlTelInput
  */
+
+
+#winner thead tr th {
+  
+  width: 20%;
+}
