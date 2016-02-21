@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     }
  
 	  namespace :admin do
-      root 'dashboard#index'
+      root 'games#index'
 
       resources :players
       resources :games do
@@ -17,7 +17,11 @@ Rails.application.routes.draw do
         end  
       end  
       #get 'games/:id/assemble_game' => "games#assemble_game"
-      resources :winning_parts
+      resources :winning_parts do 
+        collection do
+          post 'store_winning_part_cord'
+        end  
+      end  
       resources :winners ,only: [:index] 
     end
 
@@ -34,6 +38,7 @@ Rails.application.routes.draw do
       post 'forgot_password'   => 'users#forgot_password'
       get 'get_game_list' => 'games#get_list', :as => :get_game_list
       get 'search_game' => 'games#search_game', :as => :search_game
+      post 'get_next_game_number' => 'games#get_next_game_number' , :as => :get_next_game_number
     end
   end
 end
