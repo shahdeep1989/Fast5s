@@ -5,6 +5,14 @@
      /*   width: 270px;
         height: 373px; */
         cursor: move;
+        background-color: #ccc;
+        border: 1px solid #000;
+
+        height: 40px;
+        width: 40px;
+        z-index: 100;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
     }
     #draggable {
         background-color: #ccc;
@@ -12,12 +20,10 @@
     }
 
     .elementCls {
-      height: 70px;
-      width: 70px;
+      position:relative;
+      height: 40px;
+      width: 40px;
       z-index: 100;
-      background: green;
-      -moz-border-radius: 35px;
-      border-radius: 35px;
     }
 </style>
 
@@ -37,11 +43,25 @@
 
       <div class="box-header">
         <div class="box-body" id="boardId" >
-          <img src="/butterfly.png" alt="drag-and-drop image script" 
- title="drag-and-drop image script" class="dragme" id="img1Id">
+<!--          <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
+ title="drag-and-drop image script" class="dragme" id="img1Id"> -->
+          <img src="<%= @game.game_image.url %>" alt="drag-and-drop image script" 
+ title="drag-and-drop image script" id="img1Id"  style="float:left; width:70%;">
+          <div style="float:left; width:30%;">
+            <% @game.winning_parts.each do |parts| %>
+                <div class="elementCls" style="background:<%= parts.part_color %>;width:20%;float:left;margin-bottom:10px;"> </div> <span style="width:80%;float:left;height:40px;margin-bottom:10px;padding-left:10px;"> Set in <%= parts.text_panel %> </span> 
+            <% end %>  
+          </div>
+          <% @game.winning_parts.each do |parts| %>
+            <% (1..parts.num_of_element).to_a.each do %>
+              <div class="dragme" title="drag-and-drop image script" draggable="true" style="background:<%= parts.part_color %>;"> </div>
+            <% end %>
+          <% end %>
         </div>
-        <a href="#" onclick="addElement(this.id)" id="red" > Add Element Red </a>
-        <a href="#" onclick="addElement(this.id)" id="green" > Add Element Green </a>
+        <!-- 
+          <a href="#" onclick="addElement(this.id)" id="red" > Add Element Red </a>
+          <a href="#" onclick="addElement(this.id)" id="green" > Add Element Green </a>
+        -->
       </div>
       <a href="#" onclick="saveElementPosition()"> Save </a>
     </div>
@@ -55,6 +75,7 @@
           alert("Save");
         }
 
+        /*
         function addElement(elementId){
             //alert(elementId);
             board = document.getElementById("boardId");
@@ -68,16 +89,8 @@
             board.appendChild(d);
             document.onmousedown = startDrag;
             document.onmouseup = stopDrag;
+        } */
 
-            /*
-            #Example_F {
-              height: 70px;
-              width: 70px;
-              -moz-border-radius: 35px;
-              border-radius: 35px;
-            } */
-
-        }
 
         function startDrag(e) {
             // determine event object
@@ -111,6 +124,7 @@
             if (!drag) {return};
             if (!e) { var e= window.event};
             var targ=e.target?e.target:e.srcElement;
+            t = targ;
             // move div element
             targ.style.left=coordX+e.clientX-offsetX+'px';
             targ.style.top=coordY+e.clientY-offsetY+'px';

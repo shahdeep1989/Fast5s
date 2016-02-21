@@ -34,7 +34,7 @@
                     <th>Interval in sec</th>
                     <th>Total num in ticket</th>
                     <th>Num of player</th>
-                    <th colspan="3"></th>
+                    <th colspan="4"></th>
                  </thead>
                 <tbody>
                   <% @games.each do |game| %>
@@ -47,6 +47,7 @@
                       <td><%= link_to 'Show', admin_game_path(game) %></td>
                       <td><%= link_to 'Edit', edit_admin_game_path(game) %></td>
                       <td><%= link_to 'Destroy', admin_game_path(game), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                      <td><%= link_to 'Set Element', assemble_game_admin_game_path(game.id) %> </td>
                     </tr>
                   <% end %>
 
