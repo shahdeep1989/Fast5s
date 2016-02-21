@@ -39,7 +39,7 @@ angular
     if($localStorage.user){
         $rootScope.user = angular.copy($localStorage.user);
     } else {
-        $rootScope.user = {};
+        $rootScope.user = null;
     }
     //add the event to remove the rootScope error messages
     $rootScope.$on('$locationChangeSuccess',function(){

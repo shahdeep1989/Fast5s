@@ -26,15 +26,12 @@
         <md-progress-circular class="spinner" md-diameter="96" class="spinner"></md-progress-circular>
     </div>
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <md-toolbar class="header" ng-cloak>
       <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
-          <md-icon md-svg-icon="images/ic_menu_black_24px.svg"></md-icon>
-        </md-button>
         <h2>
           <span>Housie</span>
         </h2>
@@ -42,7 +39,7 @@
         <!--<md-button class="md-icon-button" aria-label="More">-->
         <!--    <md-icon md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>-->
         <!--</md-button>-->
-        <md-menu md-position-mode="target-right target">
+        <md-menu ng-if="$root.user" md-position-mode="target-right target">
             <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
                 <md-icon md-menu-origin md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>
             </md-button>
@@ -113,6 +110,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/ng-lodash/build/ng-lodash.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
