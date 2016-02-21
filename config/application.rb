@@ -23,5 +23,7 @@ module Fast5s
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.autoload_paths += %W(#{config.root}/lib)
     config.active_record.raise_in_transactional_callbacks = true
+    config.assets.precompile += %w(.svg .eot .woff .ttf)
+    config.assets.paths << "#{Rails.root.to_s}/app/assets/fonts"
   end
 end
