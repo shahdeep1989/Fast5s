@@ -28,3 +28,7 @@
   
   width: 20%;
 }
+.ver-align-top
+{
+  vertical-align: top !important;
+}
