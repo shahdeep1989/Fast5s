@@ -86,3 +86,15 @@
         ],
         options: {}} %>     
 
+<!-- Logout -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Get Game List', 
+        link_href: 'get_game_list',
+        link_method: 'GET',
+        original_link: api_get_game_list_path,
+        parameters: [
+          {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 }
+            
+        ],
+        options: {}} %>   
+
