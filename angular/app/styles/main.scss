@@ -7,10 +7,15 @@ $primary_color:#106CC8;
 $error_color:#DD2C00;
 
 @import "users/users.scss";
+@import "game/game.scss";
 .header{
     svg{
         fill:white;
     }
+}
+
+.header-menu p{
+  line-height: 48px;
 }
 
 .loader{
@@ -30,6 +35,14 @@ $error_color:#DD2C00;
     }
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.serverError{
+    color:$error_color;
+    font-size:13px;
+}
 // .md-primary{
 //     background-color:$primary_color !important;
 // }

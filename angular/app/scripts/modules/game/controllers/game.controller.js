@@ -17,12 +17,16 @@
     vm.image = 'images/butterFly.png';
     vm.coords= [
       {
-        x:10,
-        y:10
+        x:50,
+        y:50,
+        number:'99',
+        isSelected:false
       },
       {
-        x:20,
-        y:20
+        x:90,
+        y:90,
+        number:'11',
+        isSelected:true
       }
     ]
   }

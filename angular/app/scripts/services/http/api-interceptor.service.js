@@ -16,7 +16,7 @@ angular.module('housyApp')
         /**
          * @ngdoc
          * @name housyApp.service:APIInterceptor:tranformRequest
-         * @methodOf housyApp.service:APIInterceptor   
+         * @methodOf housyApp.service:APIInterceptor
          * @param {object} obj data to be transform
          * @return {string} Return transformed string
          *
@@ -26,7 +26,7 @@ angular.module('housyApp')
         var tranformRequest = function(obj) {
             var str = [];
             for (var p in obj){
-                //if the parameter is true and its object then ignore it for form building 
+                //if the parameter is true and its object then ignore it for form building
                 if(obj[p] && typeof(obj[p]) === 'object' && obj[p].constructor !== Array){
                     continue;
                 }
@@ -34,12 +34,12 @@ angular.module('housyApp')
             }
             return str.join('&');
         };
-        
+
         /**
          * @ngdoc
          * @name housyApp.service:APIInterceptor:request
-         * @methodOf housyApp.service:APIInterceptor   
-         * @param {object} config configuration options for the httpRequest 
+         * @methodOf housyApp.service:APIInterceptor
+         * @param {object} config configuration options for the httpRequest
          * @return {object} Return transformed config response
          *
          * @description
@@ -66,13 +66,13 @@ angular.module('housyApp')
             }
             return config;
         };
-        
+
         /**
          * @ngdoc
          * @name housyApp.service:APIInterceptor:response
-         * @methodOf housyApp.service:APIInterceptor   
+         * @methodOf housyApp.service:APIInterceptor
          * @param {object} reponse response data of http response
-         * @return {object} Returns modified reponse data or reject the data 
+         * @return {object} Returns modified reponse data or reject the data
          *
          * @description
          * Method to change the reponse of http request
@@ -98,7 +98,7 @@ angular.module('housyApp')
                 }
             };
 
-            //check response in case of apis only 
+            //check response in case of apis only
             if (response.config.url.indexOf(apiUri) === -1 || response.config.url.indexOf('fblogin') !==-1) {
                 return response;
             }
@@ -126,7 +126,7 @@ angular.module('housyApp')
         /**
          * @ngdoc
          * @name housyApp.service:APIInterceptor:responseError
-         * @methodOf housyApp.service:APIInterceptor   
+         * @methodOf housyApp.service:APIInterceptor
          * @param {object} reponse response data of http response
          * @return {object} Returns rejected response data
          *
@@ -142,7 +142,7 @@ angular.module('housyApp')
          * <br>Method will add the <b>authentication token</b> and <b>user_role</b> if user is logged in
          */
         service.responseError = function(response) {
-            //if this is not an api call just ignore the call 
+            //if this is not an api call just ignore the call
             if (response.config.url.indexOf(apiUri) === -1) {
                 return $q.reject(response);
             } else { //else proceed

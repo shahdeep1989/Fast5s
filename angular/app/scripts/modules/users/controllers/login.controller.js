@@ -16,9 +16,14 @@
         var vm = this;
         vm.user = {};
         vm.login = login;
-        
+        vm.logout = logout;
+
         function login(){
             userService.login(vm.user)
+        }
+
+        function logout(){
+            userService.logout();
         }
     }
 })();
