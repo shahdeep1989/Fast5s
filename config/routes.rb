@@ -9,6 +9,7 @@ Rails.application.routes.draw do
  
 	  namespace :admin do
       root 'dashboard#index'
+
       resources :players
       resources :games do
         member do
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
         end  
       end  
       #get 'games/:id/assemble_game' => "games#assemble_game"
+      resources :winning_parts
     end
 
     root 'dashboard#index'
