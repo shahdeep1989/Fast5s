@@ -8,6 +8,7 @@ json.data do
     json.array! @games.each do |game|
     	json.id game.id
     	json.name game.name
+      json.name game.description
       json.interval_sec game.interval_sec
     	json.number_of_player game.num_of_player
       json.game_image  Rails.application.secrets.host+game.game_image.url
