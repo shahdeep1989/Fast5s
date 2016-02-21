@@ -130,17 +130,17 @@ class Api::V1::GamesController < Api::V1::BaseController
 			elements_to_find.each_with_index do |element,index|
 				puts "---------------------------elemt-------#{element}"
 				if displayed_elements.include?element
-					if index == elements_to_find -1
+					if index == elements_to_find.count -1
 						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id])
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)		
 					end	
 				else
 					puts "=================element not found"
 					@elemt << element
-					
+					render_json({:errors => "Winning part not completed properly due to elemets #{@elem}"}.to_json) if (index == elements_to_find.count - 1)
 				end	
 			end	
-			render_json({:errors => "Winning part not completed properly due to elemets #{@elem}"}.to_json) unless @elemt.present? 
+
 			
 		else
 			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
