@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
+  # user type = 1 for admin , user type = 2 for player 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :tickets ,:dependent => :destroy
@@ -40,4 +41,9 @@ class User < ActiveRecord::Base
     f.close
     File.delete("#{Rails.root.to_s}/public/tmp/#{filename}.png")
   end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
 end

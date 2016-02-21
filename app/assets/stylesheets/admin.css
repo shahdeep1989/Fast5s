@@ -19,6 +19,12 @@
  *= require blue
  *= require style
  *= require_self
-
- * require intlTelInput
+ *= require bootstrap-colorpicker
+ *= require select2.min
  */
+
+
+#winner thead tr th {
+  
+  width: 20%;
+}

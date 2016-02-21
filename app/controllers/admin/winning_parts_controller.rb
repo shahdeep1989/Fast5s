@@ -59,7 +59,7 @@ class Admin::WinningPartsController <  Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def winning_parts_params
-        params.require(:winning_part).permit( :text_panel ,:num_of_element ,:part_color)
+        params.require(:winning_part).permit( :text_panel ,:num_of_element ,:part_color ,:game_id)
     end  
 
 

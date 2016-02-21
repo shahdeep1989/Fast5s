@@ -4,7 +4,7 @@ class Admin::PlayersController < Admin::BaseController
   # GET /admin/Users
   # GET /admin/Users.json
   def index
-    @admin_players = User.all
+    @admin_players = User.where(user_type: 2)
   end
 
   # GET /admin/Users/1
@@ -24,13 +24,15 @@ class Admin::PlayersController < Admin::BaseController
   # POST /admin/Users
   # POST /admin/Users.json
   def create
+    params[:user][:user_type] = 2 # user type for player
     @admin_player = User.new(admin_User_params)
 
     respond_to do |format|
       if @admin_player.save
-        format.html { redirect_to @admin_player, notice: 'User was successfully created.' }
+        format.html { redirect_to admin_players_path, notice: 'Player was successfully created.' }
         format.json { render :show, status: :created, location: @admin_User }
       else
+        flash[:error] = @admin_player.errors.full_messages
         format.html { render :new }
         format.json { render json: @admin_player.errors, status: :unprocessable_entity }
       end
@@ -42,9 +44,10 @@ class Admin::PlayersController < Admin::BaseController
   def update
     respond_to do |format|
       if @admin_player.update(admin_User_params)
-        format.html { redirect_to @admin_player, notice: 'User was successfully updated.' }
+        format.html { redirect_to admin_player_path(@admin_player) , notice: 'Player was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin_User }
       else
+        flash[:error] = @admin_player.errors.full_messages
         format.html { render :edit }
         format.json { render json: @admin_player.errors, status: :unprocessable_entity }
       end
@@ -56,7 +59,7 @@ class Admin::PlayersController < Admin::BaseController
   def destroy
     @admin_player.destroy
     respond_to do |format|
-      format.html { redirect_to admin_players_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to admin_players_url, notice: 'Player was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +72,6 @@ class Admin::PlayersController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_User_params
-      params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
+      params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation,:user_type)
     end
 end

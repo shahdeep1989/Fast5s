@@ -7,7 +7,7 @@
              <%#= m.gsub('Email Please use a valid email address.','Please use a valid email address.') %> 
                <%= m.gsub("Appt can't be blank","Apartment can't be blank") %><br>
       <% end %>
-    
+      </div>
     <% else %>
       <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
