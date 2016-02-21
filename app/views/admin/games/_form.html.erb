@@ -21,7 +21,7 @@
                 </div>
      
                 <div class="form-group">
-                  <label><%= f.label "Interval In Seconds" %></label>
+                  <label><%= f.label "Interval In Seconds" %></label>(Please Enter mininum 10 sec)
                   <%= f.number_field :interval_sec , :class => "form-control"  %>
                 </div>
          
@@ -31,7 +31,7 @@
                 </div>    
 
                 <div class="form-group">
-                  <label><%= f.label "Game Image" %></label>
+                  <label><%= f.label "Game Image" %></label>(Please Enter the image size upto 600x600)
                   <%= f.file_field :game_image , :class => "form-control"  %>
                 </div>    
 
@@ -50,3 +50,22 @@
     </div>
   </div>
 </div>
+
+
+
+<script type="text/javascript">
+
+
+
+  function add_count_remove()
+  {
+      remove_count += 1;
+  }
+  if (remove_count == 0)
+  {
+    $(".remove_link").hide();
+  }
+
+</script>
+
+
