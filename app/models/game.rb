@@ -10,4 +10,16 @@ class Game < ActiveRecord::Base
 
   	accepts_nested_attributes_for :winning_parts ,:allow_destroy => true 
 
+
+  	validate :valid_game_image
+
+
+	def valid_game_image
+    	if self.game_image.present? && self.game_image.queued_for_write[:original].present? 
+      		dimensions = Paperclip::Geometry.from_file(self.game_image.queued_for_write[:original])
+      		self.errors.add(:game_image, "Please upload a file at least 600 pixels wide") if dimensions.width > 600.to_f
+      		self.errors.add(:game_image, "Please upload a file at least 600 pixels tall") if dimensions.height > 600.to_f
+    	end
+  	end
+
 end
