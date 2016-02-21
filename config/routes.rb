@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       end  
       #get 'games/:id/assemble_game' => "games#assemble_game"
       resources :winning_parts
+      resources :winners ,only: [:index] 
     end
 
     root 'dashboard#index'

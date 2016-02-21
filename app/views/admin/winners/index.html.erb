@@ -1,0 +1,62 @@
+<section class="content-header">
+  <h1>
+    Winners
+    <small>List</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><%#= link_to "<i class='fa fa-wheelchair'></i> Game".html_safe , admin_players_path  %></li>
+    <li class="active">List</li>
+  </ol>
+  <br />
+  <%#= render 'shared/error_messages' %>
+</section>
+
+<section class="content">
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+
+      <div class="box-header">
+        <h3 class="box-title">
+        </h3>
+        <br />
+        <div class="box-body">
+          <div class="table-responsive">
+            <div id="example_wrapper" class="dataTables_wrapper" role="grid">
+             
+
+              <table id="winner"  class="display">
+                <thead>
+                  <tr>
+                    <th>Winner Name</th>
+                    <th>Winner Email</th>
+                    <th>Game</th>
+                    <th>Game Start Time</th>
+                    <th>Winning Part</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @winners.each do |winner| %>
+                    <tr>
+                      <td><%= winner.user.full_name %></td>
+                      <td><%= winner.user.email %></td>
+                      <td><%= winner.winning_part.try(:game).try(:name) %></td>
+                      <td><%= winner.room.created_at + 5.minutes %></td>
+                      <td><%= winner.winning_part.text_panel %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
