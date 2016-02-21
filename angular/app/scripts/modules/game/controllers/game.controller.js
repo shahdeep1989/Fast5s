@@ -7,7 +7,23 @@
  * # gameCtrl
  * Controller of the housyApp
  */
-angular.module('housyApp')
-  .controller('gameCtrl', function () {
-     console.log('gameCtrl controller');
-  });
+(function(){
+  angular
+    .module('housyApp')
+    .controller('gameCtrl',gameCtrl);
+  gameCtrl.$inject = ['gameService'];
+  function gameCtrl(gameService) {
+    var vm = this;
+    vm.image = 'images/butterFly.png';
+    vm.coords= [
+      {
+        x:10,
+        y:10
+      },
+      {
+        x:20,
+        y:20
+      }
+    ]
+  }
+})();
