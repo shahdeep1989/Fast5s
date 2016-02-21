@@ -3,6 +3,7 @@
     <div class="box box-primary">
       <div class="box-header"> 
       <% text = @admin_player.new_record? ? "New Player" : "Edit Player" %>
+      <% btn_text = @admin_player.new_record? ? "Create New Player" : "Update Player" %>
           <h3 class="box-title"><%=text %></h3>
         <h3 class="box-title" style="float: right;"><%if request.url.include?("edit")%>  <%= link_to "Show", admin_player_path(@admin_player), class: "label label-primary" %><% end  %>  <%= link_to "Back", admin_players_path, class: "label label-primary" %></h3>
 
@@ -39,7 +40,7 @@
                   <%= f.password_field :password_confirmation , :class => "form-control"  %>
                 </div>                                     
                 <div class="box-footer col-md-6">
-                  <%= f.submit class: "btn btn-primary" ,:value => "#{text}" %>
+                  <%= f.submit class: "btn btn-primary" ,:value => "#{btn_text}" %>
                 </div>
             </div>
           <% end %>

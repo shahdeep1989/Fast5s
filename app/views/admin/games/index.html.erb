@@ -30,9 +30,9 @@
            <table id="game"  class="display" style="width:100%;" >
                 <thead>
                     <th>Name</th>
-                    <th>Game type</th>
+                  <!--  <th>Game type</th> -->
                     <th>Interval in sec</th>
-                    <th>Total num in ticket</th>
+                  <!--  <th>Total num in ticket</th>  -->
                     <th>Num of player</th>
                     <th colspan="4"></th>
                  </thead>
@@ -40,9 +40,9 @@
                   <% @games.each do |game| %>
                     <tr>
                       <td><%= game.name %></td>
-                      <td><%= game.game_type %></td>
+                    <!--  <td><%#= game.game_type %></td> -->
                       <td><%= game.interval_sec %></td>
-                      <td><%= game.total_number_in_ticket %></td>
+                    <!--  <td><%#= game.total_number_in_ticket %></td>  -->
                       <td><%= game.num_of_player %></td>
                       <td><%= link_to 'Show', admin_game_path(game) %></td>
                       <td><%= link_to 'Edit', edit_admin_game_path(game) %></td>

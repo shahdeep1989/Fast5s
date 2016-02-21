@@ -32,8 +32,8 @@
                     <th>Email</th>
                     <th>First name</th>
                     <th>Last name</th>
-                    <th>Password</th>
-                    <th>Password confirmation</th>
+                <!--    <th>Password</th>
+                    <th>Password confirmation</th> -->
                     <th colspan="3"></th>
                   </tr>
                 </thead>
@@ -44,8 +44,8 @@
                       <td><%= admin_player.email %></td>
                       <td><%= admin_player.first_name %></td>
                       <td><%= admin_player.last_name %></td>
-                      <td><%= admin_player.password %></td>
-                      <td><%= admin_player.password_confirmation %></td>
+                    <!--  <td><%#= admin_player.password %></td>
+                      <td><%#= admin_player.password_confirmation %></td> -->
                       <td><%= link_to 'Show', admin_player_path(admin_player) %></td>
                       <td><%= link_to 'Edit', edit_admin_player_path(admin_player) %></td>
                       <td><%= link_to 'Destroy', admin_player_path(admin_player), method: :delete, data: { confirm: 'Are you sure?' } %></td>
