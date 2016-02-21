@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     }
  
 	  namespace :admin do
-      root 'dashboard#index'
+      root 'games#index'
 
       resources :players
       resources :games do

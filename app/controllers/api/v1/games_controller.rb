@@ -63,13 +63,13 @@ class Api::V1::GamesController < Api::V1::BaseController
 	def get_next_game_number
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
-			@room = @current_user.rooms.find(params[:room_id])
+			@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
 			if @room.present?
 				if @room.num_array_to_pass.present?
 					@number = @room.num_array_to_pass.last
 					render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)
 				else
-					render_json({:errors => "Get somthing is wrong to find next numbers"}.to_json)
+					render_json({:errors => "Please wait for some time to get the next number"}.to_json)
 				end
 			else
 				render_json({:errors => "sorry room is not found"}.to_json)
