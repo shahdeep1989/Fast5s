@@ -11,6 +11,7 @@ class Game < ActiveRecord::Base
   accepts_nested_attributes_for :winning_parts ,:allow_destroy => true 
   validates :name, :interval_sec, :num_of_player, :game_image, presence: true
   validate :seconds_greater_than
+  validate :num_of_player_count
   validate :valid_game_image
 
 
@@ -26,6 +27,12 @@ class Game < ActiveRecord::Base
   def seconds_greater_than
     if self.interval_sec && (self.interval_sec < 10)
       self.errors.add(:interval_sec, "Minimum 10 Seconds Interval is Compulsory.")
+    end
+  end
+
+  def num_of_player_count
+    if self.num_of_player && (self.num_of_player < 2)
+      self.errors.add(:num_of_player, "Minimum 2 players are Compulsory.")
     end
   end
 
