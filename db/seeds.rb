@@ -7,3 +7,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create(email: 'admin@housie.com', password: '12345678', password_confirmation: '12345678')
+u = User.find_by_email('admin@housie.com')
+u.update_attributes(:user_type => 1)
