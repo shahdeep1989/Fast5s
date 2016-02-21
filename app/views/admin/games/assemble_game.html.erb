@@ -100,20 +100,21 @@
           <% end %>
           $("#store_cords").submit();
         }
-
+        /*
         function set_cord_location(){  
-          <% @game.winning_parts.each do |parts| %>
-            <% coords =  !parts.coordinates.nil? ? parts.coordinates.split(",") : [] %>
-            <% @count = 0 %>
-            $('.dragme.<%= parts.id %>').each(function(i, obj) {
+          <%# @game.winning_parts.each do |parts| %>
+            <%# coords =  !parts.coordinates.nil? ? parts.coordinates.split(",") : [] %>
+            <%# @count = 0 %>
+            $('.dragme.<%#= parts.id %>').each(function(i, obj) {
               //alert("count<%#=@count %>")
-              //alert(<%= coords[@count] %>)
-              $(this).css({top: <%= coords[@count] %>, left: <%= coords[@count+1] %>})
-              <% @count = @count + 2 %>
+              //alert(<%#= coords[@count] %>)
+              $(this).css({top: <%#= coords[@count] %>, left: <%#= coords[@count+1] %>})
+              <%# @count = @count + 2 %>
             });
-          <% end %> 
+          <%# end %> 
         }
-        //set_cord_location(); 
+        set_cord_location(); 
+        */
         /*
       function set_cord_location(){  
         <%# @game.winning_parts.each do |parts| %>
