@@ -1,10 +1,13 @@
-class Api::V1::GamesController < Api::V1::BaseController
-	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number]
+require 'rufus-scheduler'
 
+class Api::V1::GamesController < Api::V1::BaseController
+	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game]
+	scheduler = Rufus::Scheduler.new
 	def get_list
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
 			@games = Game.all.includes(:winning_parts)
+			
 			unless @games.present?
 				render_json({:errors => "No games present"}.to_json)
 			end
@@ -38,6 +41,8 @@ class Api::V1::GamesController < Api::V1::BaseController
         @ticket.save
         puts "==================Ticket=========#{@ticket.inspect}"
 			end
+			@part_counts = @room.game.winning_parts.map(&:num_of_element)
+
 		else	
 		end
 	end
@@ -46,7 +51,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 		numbers = []
 		loop do
 			break if numbers.size == limit
-      x = rand(99)
+      x = rand(100)
       unless numbers.include? x
       	numbers << x
       end
@@ -57,6 +62,15 @@ class Api::V1::GamesController < Api::V1::BaseController
 	def generate_rooms
 		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes)
 		@room.save
+		# scheduler.at @room.deactivation_time do
+		# 	total_numbers = []
+		# 	scheduler.every '#{@game.interval_sec.to_i}s' do
+		# 		x = rand(100)
+		# 		if @room.num_array_to_pass.size < 100 && !@room.include? x
+		# 		else
+		# 		end
+		# 	end
+		# end
 		return @room
 	end	
 
