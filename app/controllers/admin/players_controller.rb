@@ -4,7 +4,7 @@ class Admin::PlayersController < Admin::BaseController
   # GET /admin/Users
   # GET /admin/Users.json
   def index
-    @admin_players = User.all
+    @admin_players = User.where(user_type: 2)
   end
 
   # GET /admin/Users/1
