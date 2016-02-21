@@ -12,6 +12,9 @@ $error_color:#DD2C00;
     svg{
         fill:white;
     }
+    h2{
+      cursor:pointer;
+    }
 }
 
 .header-menu p{
@@ -46,6 +49,9 @@ $error_color:#DD2C00;
 
 .container-fluid body{
   height: 100%;
+}
+md-icon{
+  box-sizing: content-box;
 }
 // .md-primary{
 //     background-color:$primary_color !important;

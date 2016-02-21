@@ -30,9 +30,13 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <md-toolbar class="header" ng-cloak>
+    <div class="container-fluid">
+    <md-toolbar class="header" ng-cloak style="position: absolute;top:0px;right: 0px;left: 0px">
       <div class="md-toolbar-tools">
-        <h2>
+        <h2 ui-sref="home" ng-if="$root.user">
+          <span>Housie</span>
+        </h2>
+        <h2 ui-sref="login" ng-if="!$root.user">
           <span>Housie</span>
         </h2>
         <span flex></span>
@@ -72,26 +76,15 @@
         </md-menu>
       </div>
     </md-toolbar>
-    <div class="container-fluid" ui-view style="padding:0px">
-    </div>
 
+    <div class="container-fluid" ui-view style="padding:0px;margin:0px;height:100%;padding-top:64px" flex>
+    </div>
+    </div>
     <!--<div class="footer">-->
       <!--<div class="container">-->
         <!--<p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>-->
       <!--</div>-->
     <!--</div>-->
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->

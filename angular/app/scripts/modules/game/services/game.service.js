@@ -43,8 +43,8 @@
             data.defaultError = 'Error in getting the number';
             return appHttp.callApi({
                 data:data,
-                method:'GET',
-                url:'getNumber'
+                method:'POST',
+                url:'get_next_game_number'
             });
         }
     }

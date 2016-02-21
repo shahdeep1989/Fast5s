@@ -48,12 +48,18 @@ angular
 
     $rootScope.$on('$stateChangeStart', function (e, toState  , toParams, fromState, fromParams){
         //debugger;
+
         $rootScope.errorMessage = false;
-        if(toState.checkAuth){
+        if(toState.checkAuth){ //Go to login page if auth is not successful
+            if(!userService.checkAuth()){
+                e.preventDefault();
+                $state.transitionTo('login');
+            }
+          //Go to home page if user's auth is already exists
+        } else if(toState.name=='login' || toState.name=='signUp' || toState.name=='forgotPassword'){
             if(userService.checkAuth()){
-                return;
-            } else {
-                $state.go('login');
+                e.preventDefault();
+                $state.transitionTo('home');
             }
         }
 
