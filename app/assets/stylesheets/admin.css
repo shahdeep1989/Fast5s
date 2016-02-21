@@ -19,6 +19,7 @@
  *= require blue
  *= require style
  *= require_self
+ *= require bootstrap-colorpicker
 
  * require intlTelInput
  */
