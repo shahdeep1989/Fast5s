@@ -17,7 +17,11 @@ Rails.application.routes.draw do
         end  
       end  
       #get 'games/:id/assemble_game' => "games#assemble_game"
-      resources :winning_parts
+      resources :winning_parts do 
+        collection do
+          post 'store_winning_part_cord'
+        end  
+      end  
       resources :winners ,only: [:index] 
     end
 

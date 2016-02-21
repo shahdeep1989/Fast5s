@@ -51,6 +51,19 @@ class Admin::WinningPartsController <  Admin::BaseController
     redirect_to admin_winning_parts_path, notice: 'Game was successfully destroyed.'
   end
 
+  def store_winning_part_cord
+    params.delete(:utf8)
+    params.delete(:authenticity_token)
+    params.delete(:controller)
+    params.delete(:action)
+
+    params.keys.each do |key|
+      @winning_part = WinningPart.find(key)
+      @winning_part.update_attributes(:coordinates  => params["#{key}"])
+    end  
+    redirect_to assemble_game_admin_game_path(@winning_part.game.id)
+  end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_winning_part
