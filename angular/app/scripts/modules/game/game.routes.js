@@ -12,6 +12,7 @@ angular
     })
     .state('game', {
         url: "/game",
+        params:{game:null},
         templateUrl: "scripts/modules/game/templates/game.html",
         controller: 'gameCtrl',
         controllerAs: 'vm',
