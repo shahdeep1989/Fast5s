@@ -41,4 +41,9 @@ class User < ActiveRecord::Base
     f.close
     File.delete("#{Rails.root.to_s}/public/tmp/#{filename}.png")
   end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
 end

@@ -52,6 +52,7 @@ class  Admin::GamesController <  Admin::BaseController
   end
 
   def assemble_game
+    @game = Game.find(params[:id])
     #redirect_to assemble_game_admin_game_path(params[:id])
   end
 
