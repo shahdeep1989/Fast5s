@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get  'logout' => 'users#logout', :as => :logout
       post 'change_password' => 'users#change_password'
       post 'forgot_password'   => 'users#forgot_password'
+      get 'get_game_list' => 'games#get_list', :as => :get_game_list
     end
   end
 end
