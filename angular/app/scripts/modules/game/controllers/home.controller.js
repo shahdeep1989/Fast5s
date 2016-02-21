@@ -7,7 +7,13 @@
  * # homeCtrl
  * Controller of the housyApp
  */
-angular.module('housyApp')
-  .controller('homeCtrl', function () {
-     console.log('homeCtrl controller');
-  });
+(function(){
+    angular
+    .module('housyApp')
+    .controller('homeCtrl',homeCtrl);
+    homeCtrl.$inject = ['gameService'];
+    function homeCtrl(gameService) {
+        var vm = this;
+        vm.imagePath = 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png';
+    }
+})();

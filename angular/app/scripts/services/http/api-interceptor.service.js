@@ -7,10 +7,10 @@
  * Service for intercepting the http request and response and change according to need
  */
 angular.module('housyApp')
-    .service('APIInterceptor',['$q', '$rootScope', '$localStorage', function($q, $rootScope, $localStorage) {
+    .service('APIInterceptor',['$q', '$rootScope', '$localStorage','ENV', function($q, $rootScope, $localStorage,ENV) {
         //@param service - http service to override
         var service = this;
-        var apiUri = '/locatemychild.itechutopia.com/';
+        var apiUri = ENV.host;
         // var apiUri = '/v1/';
 
         /**
@@ -48,16 +48,21 @@ angular.module('housyApp')
          */
         service.request = function(config) {
             if (config.url.indexOf(apiUri) !== -1) {
-                //add authtoken
-                if ($localStorage.auth_token) {
-                    config.data.authentication_token = $localStorage.auth_token;
-                }
-                if (config.url.indexOf('fblogin') !== -1) {
+                if(config.method!='GET'){
+                    //add authtoken
+                    if ($localStorage.user) {
+                        config.data.authentication_token = $localStorage.user.auth_token;
+                    }
                     config.data = tranformRequest(config.data);
                     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                } else {
+                    //add the auth token
+                    if(config.url.indexOf('?')>0){
+                        config.url = config.url+'&authentication_token='+$localStorage.user.auth_token;
+                    } else {
+                        config.url = config.url+'?authentication_token='+$localStorage.user.auth_token;
+                    }
                 }
-                // config.data = tranformRequest(config.data);
-                // config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
             }
             return config;
         };
@@ -100,19 +105,19 @@ angular.module('housyApp')
 
             //check if response is objct
             if (!response.data || typeof response.data !== 'object' || response.data === null) {
-                $log.error('APIInterceptor : bad response type');
+                console.error('APIInterceptor : bad response type');
                 return $q.reject(errorResponse);
             }
 
             //if response is valid json and status is error status then reject
             if (!response.data.result || !response.data.result.rstatus || response.data.result.rstatus === errorStatus) {
-                $log.error('APIInterceptor : error in api response');
+                console.error('APIInterceptor : error in api response');
                 return $q.reject(response);
             }
 
             //if data object is not there then its invalid type of data
             // if (!response.data.data) {
-            //     $log.error('APIInterceptor : No data contained in response');
+            //     console.error('APIInterceptor : No data contained in response');
             //     return $q.reject(errorResponse);
             // }
             return response;
@@ -141,7 +146,7 @@ angular.module('housyApp')
             if (response.config.url.indexOf(apiUri) === -1) {
                 return $q.reject(response);
             } else { //else proceed
-                $log.error('APIInterceptor : error with status :: ' + response.status);
+                console.error('APIInterceptor : error with status :: ' + response.status);
 
                 if(response.config.timeout.$$state.processScheduled === false){
                     response.data = {

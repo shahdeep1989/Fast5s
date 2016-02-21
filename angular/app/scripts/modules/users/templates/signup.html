@@ -1,1 +1,48 @@
-signup
+<div layout="row" class="login" ng-cloak>
+  <div flex></div>
+  <md-card class="loginContent">
+    <form ng-submit="vm.editMode?vm.editProfile():vm.signup()" name="form">
+        <md-input-container class="md-icon-float md-block">
+            <label>First Name</label>
+            <md-icon md-svg-src="images/ic_person_black_24px.svg"></md-icon>
+            <input ng-model="vm.user['user[first_name]']" type="text" name="firstName" required>
+            <div ng-messages="form.firstName.$error">
+                <div ng-message="required">First Name is required</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Last Name</label>
+            <md-icon md-svg-src="images/ic_person_black_24px.svg"></md-icon>
+            <input ng-model="vm.user['user[last_name]']" type="text" name="lastName" required>
+            <div ng-messages="form.lastName.$error">
+                <div ng-message="required">Last Name is required</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block">
+            <label>Email</label>
+            <md-icon md-svg-src="images/ic_mail_black_24px.svg"></md-icon>
+            <input ng-model="vm.user['user[email]']" ng-disabled="vm.editMode" type="email" name="email" required>
+            <div ng-messages="form.email.$error">
+                <div ng-message="required">Email is required</div>
+                <div ng-message="email">Email is invalid</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block" ng-if="!vm.editMode">
+            <label>Password</label>
+            <md-icon md-svg-src="images/ic_lock_black_24px.svg"></md-icon>
+            <input ng-model="vm.user['user[password]']" type="password" name="password" required>
+            <div ng-messages="form.password.$error">
+                <div ng-message="required">Password is required</div>
+            </div>
+        </md-input-container>
+    </form>
+    <md-button ng-click="vm.editMode?vm.editProfile():vm.signup()" class="md-raised md-primary row loginButton">
+        {{vm.editMode?'Edit Profile':'Sign Up'}}
+    </md-button>
+    <div class="serverError" ng-if="$root.errorMessage">
+        {{$root.errorMessage}}
+    </div>
+  </md-card>
+  <div flex></div>
+</div>
+

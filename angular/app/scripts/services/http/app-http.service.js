@@ -8,9 +8,6 @@
  */
 
 angular.module('housyApp')
-    //set api end point in the environment variabe
-    .constant('ENV', {name:'development',apiEndpoint:'http://locatemychild.itechutopia.com/'})
-    // .constant('ENV', {name:'development',apiEndpoint:'/v1/'})
     .service('appHttp', ['$http', '$state', '$rootScope', 'ENV', '$q', 'pendingRequests', function($http, $state,$rootScope, ENV, $q, pendingRequests) {
         
         /**
@@ -61,8 +58,8 @@ angular.module('housyApp')
                 errorTitle: angular.isDefined(request.data.errorTitle) ? request.data.errorTitle : 'Info',
                 //success toast messge to show
                 successToast: angular.isDefined(request.data.successToast) ? request.data.successToast : false,
-                //if back is true then go back when get the sucess                    
-                back: angular.isDefined(request.data.back) ? request.data.back : false,
+                //show the default error message if the error is not found from ther server
+                defaultError:angular.isDefined(request.data.defaultError) ? request.data.defaultError : false,
             };
 
             /**
@@ -85,13 +82,6 @@ angular.module('housyApp')
                 if (request.data.removePanding) {
                     console.info('appHttp: Removing the all panding request');
                     pendingRequests.cancelAll();
-                }
-                //show loading data 
-                if (uiData.showLoading) {
-                    //TODO set the logic for loading indicator
-                    // $ionicLoading.show({
-                    //     template: '<ion-spinner></ion-spinner>'
-                    // });
                 }
                 //set the loading status
                 $rootScope.loadingStatus = 'loading';
@@ -118,7 +108,7 @@ angular.module('housyApp')
              * </ul>
              */
             var _success = function(response) {
-                $log.debug('appHttp : this is success in getting the response :: ' + request.url);
+                console.debug('appHttp : this is success in getting the response :: ' + request.url);
                 $rootScope.loadingStatus = 'success';
                 // $ionicLoading.hide();
                 // TODO Hide the loading indicator
@@ -134,7 +124,12 @@ angular.module('housyApp')
                 if (uiData.successToast) {
                     var message = response.data.messages.replace(/(?:\r\n|\r|\n)/g, '<br />');
                     //TODOO set the toast
-                    //ionicToast.show(message, 'bottom', false, 2500);
+                    $mdToast.show({
+                      template: '<md-toast>'+
+                                +'<span flex>'+message+'</span></md-toast>',
+                      hideDelay: 6000,
+                      position: {bottom:true,right:true}
+                    });
                 }
             };
 
@@ -154,14 +149,14 @@ angular.module('housyApp')
              * </ul>
              */
             var _error = function(response) {
-                $log.warn('appHttp : this is error in getting the response');
+                console.warn('appHttp : this is error in getting the response');
                 $rootScope.loadingStatus = 'error';
                 // TODO set the globle loading indicator
                 // $ionicLoading.hide();
                 //if error is for unauthorized user
                 if (request.url !== 'login' //dont show the unauthorized errors for login and logout
                     && request.url !== 'logout' && response.result && response.result.errorcode === unauthorizedStatus) {
-                    $log.warn('appHttp : user is not logged in');
+                    console.warn('appHttp : user is not logged in');
                     //TODO set the alert from the angular material
                     // $ionicPopup.alert({
                     //     title: uiData.errorTitle,
@@ -170,18 +165,11 @@ angular.module('housyApp')
                     // }).then(function() {
                     //     $state.go('login');
                     // });
-                    //if error is for connection error
-                } else if (response.result && response.result.errorcode === connectionError) {
-                    if (uiData.connectionAlert) {
-                        //TODO set the alert from the angular material
-                        // $ionicPopup.alert({
-                        //     title: uiData.errorTitle,
-                        //     template: response.result.messages
-                        // });
-                    }
                     //all other errors from the server or the server down errors
                 } else if (uiData.errorAlert) {
                     var errorTitle = response.result.errorcode === unapprovedError ? 'Uh Oh!' : uiData.errorTitle;
+                    var errorMessage = response.result?response.result.messages?typeof response.result.messages==='object'?response.result.messages[0]:response.result.messages:uiData.defaultError:uiData.defaultError;
+                    $rootScope.errorMessage = errorMessage;
                     // TODO set the alert from the angular material
                     // $ionicPopup.alert({
                     //     title: errorTitle,
@@ -191,13 +179,11 @@ angular.module('housyApp')
                 } else if (response.result && response.result.errorcode === requestCanceledError) {
                     $rootScope.loadingStatus = '';
                 }
+                var errorMessage = response.result?response.result.messages?typeof response.result.messages==='object'?response.result.messages[0]:response.result.messages:uiData.defaultError:uiData.defaultError;
+                $rootScope.errorMessage = errorMessage;
             };
 
-            //initialize the api request
-            if (!_init()) {
-                $log.error('appHttp : There is no connection found for  ' + requestData.url);
-                requestData.url = '/api/connectionError';
-            }
+           _init();
 
             var canceller = $q.defer();
             pendingRequests.add({
