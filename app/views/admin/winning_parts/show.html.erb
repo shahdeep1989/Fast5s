@@ -1,0 +1,55 @@
+<section class="content-header">
+  <h1>
+    WinningPart
+    <small>Detail</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><%= link_to "<i class='fa fa-dashboard'></i> WinningPart".html_safe , admin_winning_parts_path  %></li>
+    <li class="active">Detail</li>
+  </ol>
+ </section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">
+              <%= link_to 'Edit', edit_admin_winning_part_path(@winning_part), class: "label label-primary" %>
+               <%= link_to "Back", :back, class: "label label-primary" %>
+            </h3>   
+        </div>
+        <div class="box-body">
+          <div class="table-responsive">
+            <div id="example_wrapper" class="dataTables_wrapper" role="grid">
+              <div class="dataTables_length" id="example_length">
+              </div>
+              <div id="example_filter" class="dataTables_filter pull-right">
+              </div>
+              <table aria-describedby="example_info" class="table table-bordered table-hover table-striped display dataTable" id="example">
+                <thead>
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  > Text Color</th>
+                    <td><%= @winning_part.text_panel %></td>
+                  </tr>
+              
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  >Game Type</th>
+                    <td><%= @winning_part.num_of_element %></td>
+
+                  </tr>
+                  <tr role="row">
+                    <th aria-label="Business name: activate to sort column ascending" aria-sort="ascending" style="width: 178px;" colspan="1" rowspan="1" aria-controls="example" tabindex="0" role="columnheader"  >Interval Sec</th>
+                     <td><%= @winning_part.part_color %></td>
+
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</section>
+<br>
