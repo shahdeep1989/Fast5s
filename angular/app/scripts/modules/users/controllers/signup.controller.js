@@ -7,7 +7,18 @@
  * # signupCtrl
  * Controller of the housyApp
  */
-angular.module('housyApp')
-  .controller('signupCtrl', function () {
-     console.log('signupCtrl controller');
-  });
+(function(){
+    angular
+    .module('housyApp')
+    .controller('signupCtrl',signupCtrl);
+    signupCtrl.$inject = ['userService'];
+    function signupCtrl(userService) {
+        var vm = this;
+        vm.user = {};
+        vm.signup = signup;
+        
+        function signup(){
+            userService.signup(vm.user)
+        }
+    }
+})();

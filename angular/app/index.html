@@ -22,26 +22,57 @@
     <!-- endbuild -->
   </head>
   <body ng-app="housyApp">
+    <div class="loader" ng-class="$root.loadingStatus=='loading'?'show':'hide'">
+        <md-progress-circular class="spinner" md-diameter="96" class="spinner"></md-progress-circular>
+    </div>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <md-toolbar>
+    <md-toolbar class="header">
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings">
-          <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+          <md-icon md-svg-icon="images/ic_menu_black_24px.svg"></md-icon>
         </md-button>
         <h2>
-          <span>Housy</span>
+          <span>Housie</span>
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-        </md-button>
-        <md-button class="md-icon-button" aria-label="More">
-          <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-        </md-button>
+        <!--<md-button class="md-icon-button" aria-label="More">-->
+        <!--    <md-icon md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>-->
+        <!--</md-button>-->
+        <md-menu md-position-mode="target-right target" >
+            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon md-menu-origin md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>
+            </md-button>
+            <md-menu-content width="4" >
+                <md-menu-item>
+                    <md-button ui-sref="editProfile">
+                        <div layout="row" flex>
+                            <p flex>Edit Profile</p>
+                            <md-icon md-menu-align-target md-svg-icon="images/ic_create_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="changePassword">
+                        <div layout="row" flex>
+                            <p flex>Change Password</p>
+                            <md-icon md-menu-align-target md-svg-icon="images/ic_lock_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="logout">
+                        <div layout="row" flex>
+                            <p flex>Logout</p>
+                            <md-icon md-menu-align-target md-svg-icon="images/ic_input_black_24px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
       </div>
     </md-toolbar>
     <div class="container">
@@ -81,6 +112,8 @@
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/ng-lodash/build/ng-lodash.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -90,6 +123,8 @@
         <script src="scripts/modules/users/controllers/signup.controller.js"></script>
         <script src="scripts/modules/users/controllers/forgotpwd.controller.js"></script>
         <script src="scripts/modules/users/controllers/changepwd.controller.js"></script>
+        <script src="scripts/modules/users/services/user.service.js"></script>
+        <script src="scripts/modules/users/controllers/editProfile.controller.js"></script>
         <script src="scripts/modules/users/user.routes.js"></script>
         <script src="scripts/modules/game/controllers/game.controller.js"></script>
         <script src="scripts/modules/game/controllers/home.controller.js"></script>
@@ -98,6 +133,7 @@
         <script src="scripts/services/http/api-interceptor.service.js"></script>
         <script src="scripts/services/http/app-http.service.js"></script>
         <script src="scripts/services/http/pending-requests.service.js"></script>
+        <script src="scripts/component/compareTo.js"></script>
         <!-- endbuild -->
 </body>
 </html>

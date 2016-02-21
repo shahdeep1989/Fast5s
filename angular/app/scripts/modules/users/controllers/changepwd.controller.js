@@ -2,12 +2,23 @@
 
 /**
  * @ngdoc function
- * @name housyApp.controller:changePwdCtrl
+ * @name housyApp.controller:changePasswordCtrl
  * @description
- * # changePwdCtrl
+ * # changePasswordCtrl
  * Controller of the housyApp
  */
-angular.module('housyApp')
-  .controller('changePwdCtrl', function () {
-     console.log('changePwdCtrl controller');
-  });
+(function(){
+    angular
+    .module('housyApp')
+    .controller('changePasswordCtrl',changePasswordCtrl);
+    changePasswordCtrl.$inject = ['userService'];
+    function changePasswordCtrl(userService) {
+        var vm = this;
+        vm.user = {};
+        vm.changePassword = changePassword;
+        
+        function changePassword(){
+            userService.changePassword(vm.user)
+        }
+    }
+})();

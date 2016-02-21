@@ -7,7 +7,7 @@
  * Service for managing the pendingRequests and cancel request when needed
  */
 angular.module('housyApp')
-    .service('pendingRequests',['_', function(_) {
+    .service('pendingRequests',['lodash', function(_) {
         var pending = [];
         
         /**

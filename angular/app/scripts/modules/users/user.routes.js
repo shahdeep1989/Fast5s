@@ -14,18 +14,38 @@ angular
         url: "/signup",
         templateUrl: "scripts/modules/users/templates/signup.html",
         controller: 'signupCtrl',
-        controllerAs: 'signup'
+        controllerAs: 'vm'
     })
     .state('changePassword', {
         url: "/changePassword",
         templateUrl: "scripts/modules/users/templates/change-password.html",
-        controller: 'changePwdCtrl',
-        controllerAs: 'changePwd'
+        controller: 'changePasswordCtrl',
+        checkAuth:true,
+        controllerAs: 'vm'
     })
     .state('forgotPassword', {
         url: "/forgotPassword",
         templateUrl: "scripts/modules/users/templates/forgot-password.html",
         controller: 'forgotPwdCtrl',
-        controllerAs: 'forgotPwd'
+        controllerAs: 'vm'
+    })
+    .state('editProfile', {
+        url: "/editProfile",
+        templateUrl: "scripts/modules/users/templates/signup.html",
+        controller: 'editProfileCtrl',
+        checkAuth:true,
+        controllerAs: 'vm'
+    })
+    .state('logout', {
+        url: "/logout",
+        template:' ',
+        resolve:{
+            logout:['userService',function(userService){
+                return userService.logout();
+            }]
+        },
+        onEnter:['$state',function($state){
+            $state.go('login');
+        }]
     })
 }]);
