@@ -9,11 +9,11 @@
 
 angular.module('housyApp')
     .service('appHttp', ['$http', '$state', '$rootScope', 'ENV', '$q', 'pendingRequests', function($http, $state,$rootScope, ENV, $q, pendingRequests) {
-        
+
         /**
          * @ngdoc
          * @name housyApp.service:appHttp:callAPI
-         * @methodOf housyApp.service:appHttp   
+         * @methodOf housyApp.service:appHttp
          * @param {object} request request data to call the api
          * @return {promise} return the promise of the api call
          *
@@ -30,11 +30,11 @@ angular.module('housyApp')
             //@param requestCanceledError - when panding request is cancelled by the user
             var requestCanceledError = 900;
 
-            //request data for calling api 
+            //request data for calling api
             var requestData = {
                 method: request.method || 'POST',
                 url: ENV.apiEndpoint + request.url,
-                data: request.data,
+                data: request.data
                 // timeout: canceller.promise,
                 // headers: {
                 //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -44,11 +44,11 @@ angular.module('housyApp')
 
             //data for the user interface
             var uiData = {
-                //if showLoading is true loader will be shown 
+                //if showLoading is true loader will be shown
                 showLoading: angular.isDefined(request.data.showLoading) ? request.data.showLoading : true,
                 //if success alert is there then the success alert popup will be seen
                 successAlert: angular.isDefined(request.data.successAlert) ? request.data.successAlert : false,
-                //if error alert is there then the error alert popup will be shown 
+                //if error alert is there then the error alert popup will be shown
                 errorAlert: angular.isDefined(request.data.errorAlert) ? request.data.errorAlert : true,
                 //if connection alert is false then the connection error popup will not be seen
                 connectionAlert: angular.isDefined(request.data.connectionAlert) ? request.data.connectionAlert : true,
@@ -56,8 +56,6 @@ angular.module('housyApp')
                 successTitle: angular.isDefined(request.data.successTitle) ? request.data.successTitle : 'Info',
                 //title text for error alert
                 errorTitle: angular.isDefined(request.data.errorTitle) ? request.data.errorTitle : 'Info',
-                //success toast messge to show
-                successToast: angular.isDefined(request.data.successToast) ? request.data.successToast : false,
                 //show the default error message if the error is not found from ther server
                 defaultError:angular.isDefined(request.data.defaultError) ? request.data.defaultError : false,
             };
@@ -65,7 +63,7 @@ angular.module('housyApp')
             /**
              * @ngdoc
              * @name housyApp.service:appHttp:_init
-             * @methodOf housyApp.service:appHttp   
+             * @methodOf housyApp.service:appHttp
              * @return {boolean} return true or false according to failure or success in initialization
              *
              * @description
@@ -96,41 +94,19 @@ angular.module('housyApp')
             /**
              * @ngdoc
              * @name housyApp.service:appHttp:success
-             * @methodOf housyApp.service:appHttp   
+             * @methodOf housyApp.service:appHttp
              * @param {object} response response of the success
              *
              * @description
              * Method to do postprocessing on success of api call
              * <ul>
              *     <li>If <b>successAlert = true</b> then show the success popup with success message</li>
-             *     <li>If <b>successToast = true</b> then show the success toast with success message</li>
              *     <li>If <b>back = true</b> then go to back view when got success</li>
              * </ul>
              */
             var _success = function(response) {
                 console.debug('appHttp : this is success in getting the response :: ' + request.url);
                 $rootScope.loadingStatus = 'success';
-                // $ionicLoading.hide();
-                // TODO Hide the loading indicator
-                var message=response.data? response.data.messages?response.data.messages: response.result.messages : response.result.messages;
-                if (uiData.successAlert) {
-                    //TODO show the alert from the angular material
-                    // $ionicPopup.alert({
-                    //     title: uiData.successTitle,
-                    //     template: response.data? response.data.messages?response.data.messages: response.result.messages : response.result.messages,
-                    // });
-                }
-                //show the toast for the success message
-                if (uiData.successToast) {
-                    var message = response.data.messages.replace(/(?:\r\n|\r|\n)/g, '<br />');
-                    //TODOO set the toast
-                    $mdToast.show({
-                      template: '<md-toast>'+
-                                +'<span flex>'+message+'</span></md-toast>',
-                      hideDelay: 6000,
-                      position: {bottom:true,right:true}
-                    });
-                }
             };
 
             /**
@@ -151,8 +127,6 @@ angular.module('housyApp')
             var _error = function(response) {
                 console.warn('appHttp : this is error in getting the response');
                 $rootScope.loadingStatus = 'error';
-                // TODO set the globle loading indicator
-                // $ionicLoading.hide();
                 //if error is for unauthorized user
                 if (request.url !== 'login' //dont show the unauthorized errors for login and logout
                     && request.url !== 'logout' && response.result && response.result.errorcode === unauthorizedStatus) {
@@ -170,11 +144,6 @@ angular.module('housyApp')
                     var errorTitle = response.result.errorcode === unapprovedError ? 'Uh Oh!' : uiData.errorTitle;
                     var errorMessage = response.result?response.result.messages?typeof response.result.messages==='object'?response.result.messages[0]:response.result.messages:uiData.defaultError:uiData.defaultError;
                     $rootScope.errorMessage = errorMessage;
-                    // TODO set the alert from the angular material
-                    // $ionicPopup.alert({
-                    //     title: errorTitle,
-                    //     template: response.result.messages
-                    // });
                     //if request is removed by the user remove the loading status
                 } else if (response.result && response.result.errorcode === requestCanceledError) {
                     $rootScope.loadingStatus = '';
@@ -192,7 +161,7 @@ angular.module('housyApp')
             });
             requestData.timeout = canceller.promise;
 
-            //calling http request 
+            //calling http request
             var requestPromise = $http(requestData)
                 .success(function(response) {
                     return _success(response);

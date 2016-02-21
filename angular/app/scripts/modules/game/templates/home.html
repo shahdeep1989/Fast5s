@@ -1,17 +1,17 @@
 <div ng-cloak>
     <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="game in vm.games">
+        <div flex-xs flex-gt-xs="30" layout="column" ng-repeat="game in vm.games">
             <md-card style="background:rgb(230, 230, 230)">
                 <md-card-header>
                     <md-card-avatar>
                         <md-icon class="md-avatar-icon" md-svg-icon="images/ic_more_vert_black_24px.svg"></md-icon>
                     </md-card-avatar>
                     <md-card-header-text>
-                        <span class="md-title">ButerFly</span>
+                        <span class="md-title">{{game.name}}</span>
                         <span class="md-subhead">Housie</span>
                     </md-card-header-text>
                 </md-card-header>
-                <img ng-src="{{vm.imagePath}}" class="md-card-image" alt="Washed Out">
+                <img ng-src="{{game.game_image}}" alt="Washed Out" style="height:200px;width:auto;">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{game.name}}</span>
@@ -19,11 +19,11 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
-                    <md-button class="md-raised md-warn" ui-sref="game({id:game.id})">Play this game</md-button>
+                    <md-button class="md-raised md-warn" ui-sref="game({game:game})">Play this game</md-button>
                 </md-card-actions>
             </md-card>
         </div>
-        <div class="" ng-if="$root.errorMessage">
+        <div class="serverError" ng-if="$root.errorMessage">
             {{$root.errorMessage}}
         </div>
     </md-content>

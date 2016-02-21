@@ -11,10 +11,10 @@
   angular
     .module('housyApp')
     .controller('gameCtrl',gameCtrl);
-  gameCtrl.$inject = ['gameService'];
-  function gameCtrl(gameService) {
+  gameCtrl.$inject = ['gameService','$stateParams'];
+  function gameCtrl(gameService,$stateParams) {
     var vm = this;
-    vm.image = 'images/butterFly.png';
+    vm.game = $stateParams.game;
     vm.coords= [
       {
         x:50,
