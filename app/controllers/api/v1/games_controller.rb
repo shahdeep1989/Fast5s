@@ -1,5 +1,5 @@
 class Api::V1::GamesController < Api::V1::BaseController
-	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number,:get_room_user_list]
+	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number,:get_room_user_list,:checking_winning_part]
 
 	def get_list
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
@@ -118,5 +118,33 @@ class Api::V1::GamesController < Api::V1::BaseController
 		end
 
 	end  
+
+	def checking_winning_part
+		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
+		if @token.present?
+			elements_to_find = eval(params[:elements_list])
+			current_index = params[:index]
+			@elemt  = []
+			displayed_elements = Room.find(params[:room_id]).num_array_to_pass[0..current_index.to_i]
+			winning_part = WinningPart.find(params[:winning_part_id])
+			elements_to_find.each_with_index do |element,index|
+				puts "---------------------------elemt-------#{element}"
+				if displayed_elements.include?element
+					if index == elements_to_find -1
+						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id])
+						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)		
+					end	
+				else
+					puts "=================element not found"
+					@elemt << element
+					
+				end	
+			end	
+			render_json({:errors => "Winning part not completed properly due to elemets #{@elem}"}.to_json) unless @elemt.present? 
+			
+		else
+			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+		end
+	end	
 
 end

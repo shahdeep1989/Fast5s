@@ -124,6 +124,7 @@
         ],
         options: {}} %>   
 
+
         <!-- Next Game Number -->
   <%= render partial: 'api', locals: {
         link_name: 'Get Room User List', 
@@ -138,6 +139,23 @@
         options: {}} %>   
 
 
+
+
+<!-- Check Winning Part-->
+  <%= render partial: 'api', locals: {
+        link_name: 'Check Winning Part', 
+        link_href: 'checking_winning_part',
+        link_method: 'POST',
+        original_link: api_checking_winning_part_path,
+        parameters: [
+          {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 },
+          {name: 'winning_part_id', description: 'Winning Part ID', required: 1 } ,
+          {name: 'elements_list', description: 'elements in winning part', required: 1 },
+          {name: 'current_index', description: 'current index', required: 1 },
+          {name: 'room_id', description: 'Selected Room ID', required: 1 } 
+                  
+        ],
+        options: {}} %>  
 
 
 

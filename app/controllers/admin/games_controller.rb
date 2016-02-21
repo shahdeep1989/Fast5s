@@ -15,6 +15,7 @@ class  Admin::GamesController <  Admin::BaseController
   # GET /diagnoses/new
   def new
     @game = Game.new
+    @game.winning_parts.build
   end
 
   # GET /diagnoses/1/edit
