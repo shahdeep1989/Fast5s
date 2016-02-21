@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                   <label>Game</label>
-                  <%= f.select :game_id ,options_from_collection_for_select(Game.all,:id, :name ,f.object.game_id), {:include_blank => false},{:class => "form-control diagnosis_cls"} %>
+                  <%= f.select :game_id ,options_from_collection_for_select(Game.all,:id, :name ,f.object.winning_part_game_id), {:include_blank => false},{:class => "form-control diagnosis_cls"} %>
                 </div>
 
                 <div class="form-group">
