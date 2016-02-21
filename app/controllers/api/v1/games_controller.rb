@@ -88,7 +88,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 	 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
 	 					else
 							@number = @room.num_array_to_pass[params[:current_head].to_i]
-							render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)		
+							puts "#{@number}------------------==========="
+							@winners = @room.winners
 	 					end
 	 				else
 						render_json({:result=>{:errors => "Please wait for some time to get the next number"}}.to_json)
