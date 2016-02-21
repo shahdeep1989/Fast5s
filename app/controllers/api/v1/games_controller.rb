@@ -1,5 +1,5 @@
 class Api::V1::GamesController < Api::V1::BaseController
-	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game]
+	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number]
 
 	def get_list
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
@@ -59,4 +59,24 @@ class Api::V1::GamesController < Api::V1::BaseController
 		@room.save
 		return @room
 	end	
+
+	def get_next_game_number
+		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
+		if @token.present?
+			@room = @current_user.rooms.find(params[:room_id])
+			if @room.present?
+				if @room.num_array_to_pass.present?
+					@number = @room.num_array_to_pass.last
+					render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)
+				else
+					render_json({:errors => "Get somthing is wrong to find next numbers"}.to_json)
+				end
+			else
+				render_json({:errors => "sorry room is not found"}.to_json)
+			end
+		else
+			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+		end
+	end 
+
 end

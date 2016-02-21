@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       post 'forgot_password'   => 'users#forgot_password'
       get 'get_game_list' => 'games#get_list', :as => :get_game_list
       get 'search_game' => 'games#search_game', :as => :search_game
+      post 'get_next_game_number' => 'games#get_next_game_number' , :as => :get_next_game_number
     end
   end
 end
