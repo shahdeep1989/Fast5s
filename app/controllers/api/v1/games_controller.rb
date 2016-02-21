@@ -1,5 +1,5 @@
 class Api::V1::GamesController < Api::V1::BaseController
-	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number]
+	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number,:get_room_user_list]
 
 	def get_list
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
@@ -83,5 +83,21 @@ class Api::V1::GamesController < Api::V1::BaseController
 			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
 		end
 	end 
+
+
+	def get_room_user_list
+		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
+		if @token.present?
+			@tickets =  Ticket.where(:room_id => params[:room_id].to_i)
+
+			puts "-------------#{@tickets.count}"
+			if !@tickets.present?
+				render_json({:errors => "sorry room is not found"}.to_json)
+			end
+		else
+			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+		end
+
+	end  
 
 end
