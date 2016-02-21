@@ -118,9 +118,25 @@
         original_link: api_get_next_game_number_path,
         parameters: [
           {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 },
-          {name: 'room_id', description: 'Selected Room ID', required: 1 }            
+          {name: 'room_id', description: 'Selected Room ID', required: 1 } ,
+           {name: 'current_head', description: 'current head is define', required: 1 }
+                  
         ],
         options: {}} %>   
+
+        <!-- Next Game Number -->
+  <%= render partial: 'api', locals: {
+        link_name: 'Get Room User List', 
+        link_href: 'get_room_user_list',
+        link_method: 'POST',
+        original_link: api_get_room_user_list_path,
+        parameters: [
+          {name: 'authentication_token', description: 'You will get authentication token from signup/login api', required: 1 },
+          {name: 'room_id', description: 'Selected Room ID', required: 1 } ,
+                  
+        ],
+        options: {}} %>   
+
 
 
 

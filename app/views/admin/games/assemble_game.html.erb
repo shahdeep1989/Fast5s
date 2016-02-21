@@ -66,8 +66,11 @@
           <a href="#" onclick="addElement(this.id)" id="green" > Add Element Green </a>
         -->
       </div>
-      
-      <a href="#" onclick="saveElementPosition()"> Save </a>
+      <div class="text-center pad-btm-20">
+        <button type="button" onclick="saveElementPosition()" class="btn btn-primary">Save</button> 
+      <%#=button_to "Save" ,:class=> "btn btn-primary txt-center",:onclick => "saveElementPosition()"  %>
+      </div>
+    
     </div>
   </div>
 </div>
@@ -97,7 +100,19 @@
           <% end %>
           $("#store_cords").submit();
         }
-
+      function set_cord_location(){  
+        <% @game.winning_parts.each do |parts| %>
+          <% coords =  parts.coordinates.split(",") %>
+          <% @count = 0 %>
+          $('.dragme.<%= parts.id %>').each(function(i, obj) {
+            alert("count<%=@count %>")
+           alert(<%= coords[@count] %>)
+          $(this).css({top: <%= coords[@count] %>, left: <%= coords[@count+1] %>})
+          <% @count = @count  + 2 %>
+        })
+        <% end %> 
+      }
+      set_cord_location();
         /*
         function addElement(elementId){
             //alert(elementId);

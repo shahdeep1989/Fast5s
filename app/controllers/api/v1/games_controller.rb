@@ -1,8 +1,6 @@
-require 'rufus-scheduler'
-
 class Api::V1::GamesController < Api::V1::BaseController
-	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game]
-	scheduler = Rufus::Scheduler.new
+	before_filter :authentication_user_with_authentication_token, :only => [:get_list, :search_game ,:get_next_game_number,:get_room_user_list]
+
 	def get_list
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
@@ -60,7 +58,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 	end	
 
 	def generate_rooms
-		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes)
+		number_of_array = (0..99).to_a.shuffle
+		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes , num_array_to_pass: number_of_array)
 		@room.save
 		# scheduler.at @room.deactivation_time do
 		# 	total_numbers = []
@@ -80,9 +79,13 @@ class Api::V1::GamesController < Api::V1::BaseController
 			@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
 			if @room.present?
 				if @room.num_array_to_pass.present?
-					@number = @room.num_array_to_pass.last
-					render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)
-				else
+					if params[:current_head].to_i == 100	
+ 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
+ 					else
+						@number = @room.num_array_to_pass[params[:current_head].to_i]
+						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"your number is here " ,:number => @number}}.to_json)		
+ 					end
+ 				else
 					render_json({:errors => "Please wait for some time to get the next number"}.to_json)
 				end
 			else
@@ -92,5 +95,21 @@ class Api::V1::GamesController < Api::V1::BaseController
 			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
 		end
 	end 
+
+
+	def get_room_user_list
+		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
+		if @token.present?
+			@tickets =  Ticket.where(:room_id => params[:room_id].to_i)
+
+			puts "-------------#{@tickets.count}"
+			if !@tickets.present?
+				render_json({:errors => "sorry room is not found"}.to_json)
+			end
+		else
+			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+		end
+
+	end  
 
 end
