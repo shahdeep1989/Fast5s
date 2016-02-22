@@ -136,12 +136,12 @@ class Api::V1::GamesController < Api::V1::BaseController
 				@room = Room.find(params[:room_id])
 				elements_to_find.each_with_index do |element,index|
 					if displayed_elements.include?element
-						@current_user.winners.build(:winning_part_id => 0 ,:room_id => params[:room_id]).save
+						@current_user.winners.build(:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
 					else
 						puts "=================element not found"
 						@elemt << element
-						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 
+						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 	
 					end
 				end
 			else
