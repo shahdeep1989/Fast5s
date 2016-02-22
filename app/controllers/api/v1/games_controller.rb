@@ -140,7 +140,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 				else
 					puts "=================element not found"
 					@elemt << elements_to_find
-					render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 	
+					render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json) 	
 				end	
 			else
 				winning_part = WinningPart.find(params[:winning_part_id])
@@ -150,14 +150,11 @@ class Api::V1::GamesController < Api::V1::BaseController
 						if index == elements_to_find.count - 1
 							@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
 							render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
-						else
-							@elemt << element
-							render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json)
-						end	
+						end
 					else
 						puts "=================element not found"
 						@elemt << element
-						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json)# if (index == elements_to_find.count - 1)
+						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}",:disqualify => true}}.to_json)# if (index == elements_to_find.count - 1)
 					end	
 				end		
 			end			
