@@ -49,7 +49,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 		numbers = []
 		loop do
 			break if numbers.size == limit
-      x = rand(100)
+      x = rand(10)
       unless numbers.include? x
       	numbers << x
       end
