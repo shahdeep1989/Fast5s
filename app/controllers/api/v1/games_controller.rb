@@ -132,7 +132,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 			displayed_elements = Room.find(params[:room_id].to_i).num_array_to_pass[0..current_index]
 			puts "====Total Array===#{Room.find(params[:room_id]).num_array_to_pass.inspect}"
 			puts "========DisPayed Array======#{displayed_elements.inspect}"
-			if params[:winning_part_id] == 0
+			if params[:winning_part_id].to_i == 0
 				@room = Room.find(params[:room_id])
 				elements_to_find.each_with_index do |element,index|
 					if displayed_elements.include?element
@@ -159,7 +159,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 					else
 						puts "=================element not found"
 						@elemt << element
-						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) if (index == elements_to_find.count - 1)
+						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json)# if (index == elements_to_find.count - 1)
 					end	
 				end		
 			end			
