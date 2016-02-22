@@ -24,8 +24,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 			if @rooms.present?
 				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
 				@room = @rooms.first
-				@user = @room.tickets.find_by(:user_id => @current_user.id)
-				if !@user.present?
+				@ticket = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@ticket.present?
 					@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
 					@ticket.save
 				end
@@ -38,8 +38,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 			else
 				puts "===============+New Room+=================="
 		        generate_rooms
-		        @user = @room.tickets.find_by(:user_id => @current_user.id)
-				if !@user.present?
+		        @ticket = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@ticket.present?
 		        	@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
 		        	@ticket.save
 		        end
