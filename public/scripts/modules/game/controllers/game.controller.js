@@ -56,6 +56,9 @@
     }
 
     function setTimerForGameStrart(){
+        console.log('removed');
+        $interval.cancel(vm.displayInterval);
+        $interval.cancel(vm.numberInterval);
         var now = moment(new Date());
         var then = moment(vm.startTime);
         vm.startsAfter = Math.abs(then.diff(now));
@@ -63,8 +66,6 @@
         //time out for the fist start up
         $timeout(function(){
           setParticipants();
-          console.log('removed');
-          $interval.cancel(vm.displayInterval);
           vm.getNumber();
           vm.numberInterval = $interval(function(){ //interval after the first time out
             vm.getNumber();
