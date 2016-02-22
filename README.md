@@ -1,5 +1,6 @@
 # Fast5s Housie (Education Housie)
 Most important: You need to play in group of 2 or more and join same game in 1 minute of time together. Without that you are not able to play game.
+Must watch this: https://www.youtube.com/watch?v=fKpJU44UAis&feature=youtu.be
 For those who are new to game "Housie", First read all this rules for the game.
 
 Our Housie is a bit different than general Housie, we provided some educational touch. In place of Card we are providing different shape as Tickets. Like,
@@ -29,7 +30,7 @@ Admin Panel:
 API/WebServices:
 > Also we had created api/web-services.
 > Also prepared proper documentation for developers to test api/web-services.
-
+> URL: http://169.45.106.232:3000/api_help/index
 Technology Used:
 1) For front-end: AngularJS with material design, HTML5, CSS3, SCSS, Bootstrap, JavaScript and JQuery
 2) For back-end: Ruby on Rails, HTML5, CSS3, JavaScript and JQuery
