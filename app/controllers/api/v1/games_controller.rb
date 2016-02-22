@@ -139,7 +139,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 					render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
 				else
 					puts "=================element not found"
-					@elemt << element
+					@elemt << elements_to_find
 					render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 	
 				end	
 			else
