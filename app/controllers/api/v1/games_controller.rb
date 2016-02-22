@@ -146,8 +146,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 						@current_user.winners.build(:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
 					else
-						@elemt << element
-						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json)
+						render_json({:result => {:errors => "Winning part not completed properly due to elemets" ,:disqualify => true}}.to_json)
 					end
 				else
 					winning_part = WinningPart.find(params[:winning_part_id])
@@ -155,8 +154,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
 					else
-						@elemt << element
-						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}",:disqualify => true}}.to_json)
+						render_json({:result =>{:errors => "Winning part not completed properly due to elemets",:disqualify => true}}.to_json)
 					end
 				end
 			# else
