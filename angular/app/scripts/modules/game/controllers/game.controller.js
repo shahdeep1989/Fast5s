@@ -56,12 +56,16 @@
     }
 
     function setTimerForGameStrart(){
+        debugger;
         var now = moment(new Date());
         var then = moment(vm.startTime);
         vm.startsAfter = Math.abs(then.diff(now));
 
         //time out for the fist start up
         $timeout(function(){
+          setParticipants();
+          console.log('removed');
+          $interval.cancel(vm.displayInterval);
           vm.getNumber();
           vm.numberInterval = $interval(function(){ //interval after the first time out
             vm.getNumber();
@@ -73,6 +77,7 @@
         vm.displayInterval = $interval(function(){
           console.log('inside the display interval')
           if(vm.startsAfter<=0){
+            console.log('removed');
             $interval.cancel(vm.displayInterval);
             vm.startsAfter = null;
             return;
@@ -116,10 +121,9 @@
                       .title('Alert')
                       .textContent('Game is completed')
                       .ok('Got it!')
-                        .then(function(){
-                          $state.go('home');
-                        })
-                    );
+                    ).finally(function(){
+                        $state.go('home');
+                    })
                 } else if(data.data.winners){ //if winners is there then remove the button of the winner
                     var message = '';
                     _.each(vm.winnigParts,function(value){
@@ -141,6 +145,8 @@
                         );
                     }
                 }
+                var audio = new Audio('images/new.mp3');
+                audio.play();
                 vm.displayNumber = data.data.number;
             }).error(function(response){
                 try{
@@ -186,14 +192,28 @@
         } else {
             gameService.checkWinning({elements_list:partTickets.join(),winning_part_id:id,current_index:vm.currentHead,room_id:vm.room})
               .error(function(data){
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#gameContainer')))
-                    .clickOutsideToClose(true)
-                    .title('Alert')
-                    .textContent(data.errors)
-                    .ok('Got it!')
-                );
+                if(data.result.disqualify){
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#gameContainer')))
+                      .clickOutsideToClose(true)
+                      .title('Alert')
+                      .textContent('You have claimed wrong entry, you are disqualified')
+                      .ok('Got it!')
+                  );
+                }
+              })
+              .success(function(data){
+                if(data.data) {
+                    var audio = new Audio('images/clap.mp3');
+                    audio.play();
+                    $mdToast.show(
+                      $mdToast.simple()
+                        .textContent(data.data.messages)
+                        .position('bottom right')
+                        .hideDelay(6000)
+                    );
+                }
               })
         }
     }

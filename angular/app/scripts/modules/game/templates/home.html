@@ -1,6 +1,6 @@
 <div ng-cloak>
     <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="30" layout="column" ng-repeat="game in vm.games">
+        <div flex-xs flex-gt-xs="33" layout="column" ng-repeat="game in vm.games">
             <md-card style="background:rgb(230, 230, 230)">
                 <md-card-header>
                     <md-card-avatar>
@@ -11,11 +11,11 @@
                         <span class="md-subhead">Housie</span>
                     </md-card-header-text>
                 </md-card-header>
-                <img ng-src="{{game.game_image}}" alt="Washed Out" style="height:200px;width:auto;">
+                <img ng-src="{{game.game_image}}" alt="Washed Out" style="height:200px;width:auto;margin:0px auto;">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{game.name}}</span>
-                        <span class="md-subhead">{{game.description}}</span>
+                        <!--<span class="md-subhead">{{game.description}}</span>-->
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
