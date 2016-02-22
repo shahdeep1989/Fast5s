@@ -142,9 +142,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 				puts "=============================AHIYAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			
 				if params[:winning_part_id].to_i == 0
-					displayed_elements - elements_to_find
-					elements_to_find - displayed_elements
-					if !(elements_to_find - displayed_elements).empty?
+					if (elements_to_find - displayed_elements).empty?
 						@current_user.winners.build(:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
 					else
@@ -153,9 +151,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 					end
 				else
 					winning_part = WinningPart.find(params[:winning_part_id])
-					displayed_elements - elements_to_find
-					elements_to_find - displayed_elements
-					if !(elements_to_find - displayed_elements).empty?
+					if (elements_to_find - displayed_elements).empty?
 						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
 					else
