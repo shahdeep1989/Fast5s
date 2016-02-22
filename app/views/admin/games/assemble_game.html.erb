@@ -54,8 +54,16 @@
           </div>
           <% @game.winning_parts.each do |parts| %>
             <%= hidden_field_tag parts.id , ""%>
-            <% (1..parts.num_of_element).to_a.each do %>
+            <% (1..parts.num_of_element).to_a.each_with_index do |index| %>
               <div class="dragme <%= parts.id %>" title="drag-and-drop image script" draggable="true" style="background:<%= parts.part_color %>;"> </div>
+            <!--
+              <%# if parts.coordinates.nil? %>
+                <div class="dragme <%#= parts.id %>" title="drag-and-drop image script" draggable="true" style="background:<%#= parts.part_color %>;"> </div>
+              <%# else %>
+                <%# coord = parts.coordinates.split(",") %>
+                <div class="dragme <%#= parts.id %>" title="drag-and-drop image script" draggable="true" style="background:<%#= parts.part_color %>; left: <%#= coord[index*2 - 2] %>px; top: <%#= coord[index*2 - 1] %>px;"> </div>
+              <%# end %>
+            -->
              
             <% end %>
           <% end %>
@@ -100,20 +108,21 @@
           <% end %>
           $("#store_cords").submit();
         }
-
+        /*
         function set_cord_location(){  
-          <% @game.winning_parts.each do |parts| %>
-            <% coords =  !parts.coordinates.nil? ? parts.coordinates.split(",") : [] %>
-            <% @count = 0 %>
-            $('.dragme.<%= parts.id %>').each(function(i, obj) {
+          <%# @game.winning_parts.each do |parts| %>
+            <%# coords =  !parts.coordinates.nil? ? parts.coordinates.split(",") : [] %>
+            <%# @count = 0 %>
+            $('.dragme.<%#= parts.id %>').each(function(i, obj) {
               //alert("count<%#=@count %>")
-              //alert(<%= coords[@count] %>)
-              $(this).css({top: <%= coords[@count] %>, left: <%= coords[@count+1] %>})
-              <% @count = @count + 2 %>
+              //alert(<%#= coords[@count] %>)
+              $(this).css({top: <%#= coords[@count] %>, left: <%#= coords[@count+1] %>})
+              <%# @count = @count + 2 %>
             });
-          <% end %> 
+          <%# end %> 
         }
-        set_cord_location();
+        set_cord_location(); 
+        */
         /*
       function set_cord_location(){  
         <%# @game.winning_parts.each do |parts| %>
