@@ -170,7 +170,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 					end		
 				end
 			else
-				render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json) if (index == elements_to_find.count - 1)
+				render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json)
 			end			
 		else
 			render_json({:result => {:errors => "No user found with authentication_token = #{params[:authentication_token]}"}}.to_json)
