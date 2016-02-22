@@ -1,5 +1,5 @@
 # Fast5s Housie (Education Housie)
-
+Most important: You need to play in group of 2 or more and join same game in 1 minute of time together. Without that you are not able to play game.
 For those who are new to game "Housie", First read all this rules for the game.
 
 Our Housie is a bit different than general Housie, we provided some educational touch. In place of Card we are providing different shape as Tickets. Like,
