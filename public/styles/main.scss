@@ -1,0 +1,58 @@
+// $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+$primary_color:#106CC8;
+$error_color:#DD2C00;
+
+@import "users/users.scss";
+@import "game/game.scss";
+.header{
+    svg{
+        fill:white;
+    }
+    h2{
+      cursor:pointer;
+    }
+}
+
+.header-menu p{
+  line-height: 48px;
+}
+
+.loader{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    background: rgba(130, 130, 130, 0.55);
+    .spinner{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -48px;
+        margin-left: -48px;
+    }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.serverError{
+    color:$error_color;
+    font-size:13px;
+}
+
+.container-fluid body{
+  height: 100%;
+}
+md-icon{
+  box-sizing: content-box;
+}
+// .md-primary{
+//     background-color:$primary_color !important;
+// }

@@ -1,0 +1,35 @@
+.login{
+    margin-top:30px;
+    .loginContent{
+        width: 310px;
+        padding: 18px;
+        background: #EAEAEA;
+        h1{
+            text-align: center;
+        }
+    }
+    svg{
+        fill:$primary_color;
+    }
+    .loginButton{
+        margin-top: -15px;
+        margin-right:0px;
+        margin-left:0px;
+    }
+    .login_bottom{
+        margin-right: -12px;
+        margin-left: -12px;
+        .md-button{
+            min-height: 8px;
+            line-height: 24px;
+            font-size: 11px;
+            text-decoration: underline;
+        }
+        .md-button:first-child{
+            text-align:left;
+        }
+        .md-button:last-child{
+           text-align:right;
+        }
+    }
+}

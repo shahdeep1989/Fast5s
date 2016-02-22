@@ -1,0 +1,53 @@
+<div layout="column" ng-cloak flex id="gameContainer">
+  <section layout="row" flex>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
+      <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">Participants</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <md-list>
+          <md-list-item class="md-3-line" ng-repeat="participant in vm.participants">
+            <img ng-src="images/ic_account_circle_black_24px.svg" class="md-avatar" />
+            <div class="md-list-item-text" layout="column">
+              <h3>{{ participant.email}}</h3>
+              <h4>{{ participant.name }}</h4>
+            </div>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding>
+      <div layout="column" layout-fill layout-align="top center">
+        <div ng-if="vm.startsAfter" class="md-raised md-warn md-button md-ink-ripple">Numbers will be displayed in {{vm.startsAfter}} seconds</div>
+        <div ng-if="vm.displayNumber" class="md-raised md-warn md-button md-ink-ripple">{{vm.displayNumber}}</div>
+        <div class="ticket">
+          <img ng-src="{{vm.game.game_image}}" style='max-height:600px;max-width:600px'>
+          <md-button ng-repeat="coord in vm.coords"
+                     ng-class="coord.isSelected?'md-hue-2':'md-primary'"
+                     ng-click="coord.isSelected = !coord.isSelected"
+                     class="md-fab md-mini ticketNumber"
+                     style="{{'top:'+coord.y+'px;left:'+coord.x+'px;margin:0px'}}">
+            {{coord.number}}
+          </md-button>
+        </div>
+      </div>
+    </md-content>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
+      <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">{{vm.game.name+ 'Game'}}</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <md-button ng-click="vm.checkWinning(winnigPart.id,winnigPart.text_panel)"
+                   class="md-primary md-raised"
+                   ng-show="winnigPart.doShow"
+                   ng-disabled="vm.startsAfter"
+                   ng-repeat="winnigPart in vm.winnigParts">
+            I have completed the {{winnigPart.text_panel}}
+        </md-button>
+        <md-button ng-disabled="vm.startsAfter" ng-click="vm.checkWinning(0,'')" class="md-hue-2 md-raised">
+          I have completed the whole game
+        </md-button>
+      </md-content>
+    </md-sidenav>
+  </section>
+</div>
