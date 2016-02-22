@@ -133,17 +133,15 @@ class Api::V1::GamesController < Api::V1::BaseController
 			puts "====Total Array===#{Room.find(params[:room_id]).num_array_to_pass.inspect}"
 			puts "========DisPayed Array======#{displayed_elements.inspect}"
 			if params[:winning_part_id].to_i == 0
-				@room = Room.find(params[:room_id])
-				elements_to_find.each_with_index do |element,index|
-					if displayed_elements.include?element
-						@current_user.winners.build(:room_id => params[:room_id]).save
-						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
-					else
-						puts "=================element not found"
-						@elemt << element
-						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 	
-					end
-				end
+				@room = Room.find(params[:room_id])	
+				if displayed_elements.include?elements_to_find
+					@current_user.winners.build(:room_id => params[:room_id]).save
+					render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
+				else
+					puts "=================element not found"
+					@elemt << element
+					render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 	
+				end	
 			else
 				winning_part = WinningPart.find(params[:winning_part_id])
 				elements_to_find.each_with_index do |element,index|
