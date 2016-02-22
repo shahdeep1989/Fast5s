@@ -20,7 +20,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 			@game = Game.find(params[:game_id])
 			limit = 0
 			limit = @game.winning_parts.map(&:num_of_element).inject(0){|sum,x| sum+x}
-			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 30.seconds, "Active")
+			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 2.minutes, "Active")
 			if @rooms.present?
 				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
 				@room = @rooms.first
@@ -55,7 +55,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 		numbers = []
 		loop do
 			break if numbers.size == limit
-      x = rand(10)
+      x = rand(100)
       unless numbers.include? x
       	numbers << x
       end
@@ -64,8 +64,8 @@ class Api::V1::GamesController < Api::V1::BaseController
 	end	
 
 	def generate_rooms
-		number_of_array = (0..10).to_a.shuffle
-		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 30.seconds , num_array_to_pass: number_of_array)
+		number_of_array = (0..99).to_a.shuffle
+		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes , num_array_to_pass: number_of_array)
 		@room.save
 		# scheduler.at @room.deactivation_time do
 		# 	total_numbers = []
@@ -90,7 +90,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 				@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
 				if @room.present?
 					if @room.num_array_to_pass.present?
-						if params[:current_head].to_i == 10	
+						if params[:current_head].to_i == 100	
 	 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
 	 					else
 							@number = @room.num_array_to_pass[params[:current_head].to_i]
