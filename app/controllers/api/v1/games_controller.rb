@@ -143,6 +143,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 						@elemt << element
 						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 
 					end
+				end
 			else
 				winning_part = WinningPart.find(params[:winning_part_id])
 				elements_to_find.each_with_index do |element,index|
