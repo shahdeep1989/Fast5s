@@ -11,7 +11,7 @@
   angular
     .module('housyApp')
     .controller('gameCtrl',gameCtrl);
-  gameCtrl.$inject = ['$scope','gameService','$stateParams','$timeout','$interval','$mdDialog','$state','$mdToast','$document','$rootScope'];
+  gameCtrl.$inject = ['$scope','gameService','$stateParams','$timeout','$interval','$mdDialog','$state','$mdToast','$rootScope'];
   function gameCtrl($scope,gameService,$stateParams,$timeout,$interval,$mdDialog,$state,$mdToast,$rootScope) {
     var vm = this;
     vm.game = $stateParams.game;
