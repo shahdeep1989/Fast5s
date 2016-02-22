@@ -129,15 +129,30 @@
                     })
                 } else if(data.data.winners){ //if winners is there then remove the button of the winner
                     var message = '';
-                    _.each(vm.winnigParts,function(value){
-                      _.each(data.data.winners,function(winner){
-                          if(value.id==winner.winning_part_id && value.doShow){
-                              value.doShow = false;
-                              if($rootScope.user.user_id!=winner.id){ //dont show the success toast for the current user
+                    _.each(data.data.winners,function(winner){
+                      if(winner.winning_part_id == 0 && $rootScope.user.id!=winner.id){ //check for the whole game
+                          $mdDialog.show(
+                              $mdDialog.alert()
+                                  .parent(angular.element(document.querySelector('#gameContainer')))
+                                  .clickOutsideToClose(false)
+                                  .title('Alert')
+                                  .textContent('Full game is matched by the user'+winner.name)
+                                  .ok('Got it!')
+                          ).finally(function(){
+                              $timeout(function(){
+                                $state.go('home');
+                              },10000);
+                          });
+                      } else { //check for all the winnnig parts
+                        _.each(vm.winnigParts,function(value){
+                            if(value.id==winner.winning_part_id && value.doShow){
+                                value.doShow = false;
+                                if($rootScope.user.user_id!=winner.id){ //dont show the success toast for the current user
                                   message='User '+winner.name+' has won the '+value.text_panel+'. ';
-                              }
-                          }
-                      })
+                                }
+                            }
+                        })
+                      }
                     });
                     if(message){
                         $mdToast.show(
@@ -199,9 +214,20 @@
                   $mdDialog.show(
                     $mdDialog.alert()
                       .parent(angular.element(document.querySelector('#gameContainer')))
-                      .clickOutsideToClose(true)
+                      .clickOutsideToClose(false)
                       .title('Alert')
                       .textContent('You have claimed wrong entry, you are disqualified')
+                      .ok('Got it!')
+                  ).then(function(){
+                      $state.go('home');
+                  })
+                } else if(id==0){ //if got the success for the full housie then show the alert for the full housie
+                  $mdDialog.show(
+                    $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#gameContainer')))
+                      .clickOutsideToClose(false)
+                      .title('Congratulations')
+                      .textContent('You have completed the full housie!!!')
                       .ok('Got it!')
                   ).then(function(){
                       $state.go('home');
