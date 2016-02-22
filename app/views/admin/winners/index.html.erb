@@ -42,7 +42,7 @@
                       <td><%= winner.user.full_name %></td>
                       <td><%= winner.user.email %></td>
                       <td><%= winner.winning_part.try(:game).try(:name) %></td>
-                      <% if winner.winning_part.id == 0  %>
+                      <% if winner.winning_part_id.nil? %>
                         <td>FullHouse</td>
                       <% else %>     
                         <td><%= winner.winning_part.text_panel %></td>

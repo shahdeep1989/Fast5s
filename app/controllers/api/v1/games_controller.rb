@@ -24,8 +24,11 @@ class Api::V1::GamesController < Api::V1::BaseController
 			if @rooms.present?
 				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
 				@room = @rooms.first
-				@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
-				@ticket.save
+				@ticket = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@ticket.present?
+					@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+					@ticket.save
+				end
 				puts "==================Ticket=========#{@ticket.inspect}"
 				if @rooms.first.tickets.count == @game.num_of_player
 					@rooms.first.status = "Deactive"
@@ -34,10 +37,13 @@ class Api::V1::GamesController < Api::V1::BaseController
 				end
 			else
 				puts "===============+New Room+=================="
-        generate_rooms
-        @ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
-        @ticket.save
-        puts "==================Ticket=========#{@ticket.inspect}"
+		        generate_rooms
+		        @ticket = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@ticket.present?
+		        	@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+		        	@ticket.save
+		        end
+		        puts "==================Ticket=========#{@ticket.inspect}"
 			end
 			@part_counts = @room.game.winning_parts.map(&:num_of_element)
 
@@ -109,7 +115,6 @@ class Api::V1::GamesController < Api::V1::BaseController
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
 			@tickets =  Ticket.where(:room_id => params[:room_id].to_i)
-
 			puts "-------------#{@tickets.count}"
 			if !@tickets.present?
 				render_json({:errors => "sorry room is not found"}.to_json)
@@ -131,25 +136,44 @@ class Api::V1::GamesController < Api::V1::BaseController
 			@elemt  = []
 			displayed_elements = Room.find(params[:room_id].to_i).num_array_to_pass[0..current_index]
 			puts "====Total Array===#{Room.find(params[:room_id]).num_array_to_pass.inspect}"
-			puts "========Displayed Array======#{displayed_elements.inspect}"
-			winning_part = WinningPart.find(params[:winning_part_id])
-			elements_to_find.each_with_index do |element,index|
-				puts "---------------------------elemt-------#{element}"
-				if displayed_elements.include?element
-					if index == elements_to_find.count - 1
-						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
-						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)		
+			puts "========DisPayed Array======#{displayed_elements.inspect}"
+			if elements_to_find.count == current_index 
+				if params[:winning_part_id].to_i == 0
+					elements_to_find.each_with_index do |element,index|
+				
+						@room = Room.find(params[:room_id])	
+						if displayed_elements.include?elements_to_find
+							if index == elements_to_find.count - 1
+								@current_user.winners.build(:room_id => params[:room_id]).save
+								render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
+							end
+						else
+							puts "=================element not found"
+							@elemt << elements_to_find
+		           			render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json) if (index == elements_to_find.count - 1)
+		                end
 					end	
 				else
-					puts "=================element not found"
-					@elemt << element
-					render_json({:errors => "Winning part not completed properly due to elemets #{@elem}"}.to_json) if (index == elements_to_find.count - 1)
-				end	
-			end	
-
-			
+					winning_part = WinningPart.find(params[:winning_part_id])
+					elements_to_find.each_with_index do |element,index|
+						puts "---------------------------elemt-------#{element}"
+						if displayed_elements.include?element
+							if index == elements_to_find.count - 1
+								@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
+								render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
+							end
+						else
+							puts "=================element not found"
+							@elemt << element
+							render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}",:disqualify => true}}.to_json) if (index == elements_to_find.count - 1)
+						end	
+					end		
+				end
+			else
+				render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json) if (index == elements_to_find.count - 1)
+			end			
 		else
-			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+			render_json({:result => {:errors => "No user found with authentication_token = #{params[:authentication_token]}"}}.to_json)
 		end
 	end	
 
