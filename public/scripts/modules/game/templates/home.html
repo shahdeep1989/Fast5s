@@ -1,6 +1,6 @@
-<div ng-cloak>
-    <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="game in vm.games">
+<div ng-cloak class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="game in vm.games">
             <md-card style="background:rgb(230, 230, 230)">
                 <md-card-header>
                     <md-card-avatar>
@@ -11,7 +11,7 @@
                         <span class="md-subhead">Housie</span>
                     </md-card-header-text>
                 </md-card-header>
-                <img ng-src="{{game.game_image}}" alt="Washed Out" style="height:200px;width:auto;margin:0px auto;">
+                <img ng-src="{{game.game_image}}" alt="Washed Out" style="height:200px;width:auto;margin:0px auto;max-width: 100%;">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{game.name}}</span>
@@ -26,5 +26,5 @@
         <div class="serverError" ng-if="$root.errorMessage">
             {{$root.errorMessage}}
         </div>
-    </md-content>
+    </div>
 </div>

@@ -11,8 +11,8 @@
   angular
     .module('housyApp')
     .controller('gameCtrl',gameCtrl);
-  gameCtrl.$inject = ['$scope','gameService','$stateParams','$timeout','$interval','$mdDialog','$state','$mdToast','$document'];
-  function gameCtrl($scope,gameService,$stateParams,$timeout,$interval,$mdDialog,$state,$mdToast) {
+  gameCtrl.$inject = ['$scope','gameService','$stateParams','$timeout','$interval','$mdDialog','$state','$mdToast','$document','$rootScope'];
+  function gameCtrl($scope,gameService,$stateParams,$timeout,$interval,$mdDialog,$state,$mdToast,$rootScope) {
     var vm = this;
     vm.game = $stateParams.game;
     vm.room = null;
@@ -123,7 +123,9 @@
                       .textContent('Game is completed')
                       .ok('Got it!')
                     ).finally(function(){
-                        $state.go('home');
+                        $timeout(function(){
+                            $state.go('home');
+                        },10000);
                     })
                 } else if(data.data.winners){ //if winners is there then remove the button of the winner
                     var message = '';
