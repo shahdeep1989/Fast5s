@@ -20,7 +20,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 			@game = Game.find(params[:game_id])
 			limit = 0
 			limit = @game.winning_parts.map(&:num_of_element).inject(0){|sum,x| sum+x}
-			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 2.minutes, "Active")
+			@rooms = Room.where("game_id = ? and created_at > ? and status = ?", @game.id, Time.now - 1.minutes, "Active")
 			if @rooms.present?
 				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
 				@room = @rooms.first
@@ -59,7 +59,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 
 	def generate_rooms
 		number_of_array = (0..10).to_a.shuffle
-		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 2.minutes , num_array_to_pass: number_of_array)
+		@room = @game.rooms.build(status: "Active", deactivation_time: Time.now + 1.minutes , num_array_to_pass: number_of_array)
 		@room.save
 		# scheduler.at @room.deactivation_time do
 		# 	total_numbers = []
