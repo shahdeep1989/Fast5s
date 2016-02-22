@@ -42,7 +42,8 @@ angular.module('housyApp')
                 // }
             };
 
-            //data for the user interface
+            //data for the us
+          // er interface
             var uiData = {
                 //if showLoading is true loader will be shown
                 showLoading: angular.isDefined(request.data.showLoading) ? request.data.showLoading : true,
@@ -82,7 +83,7 @@ angular.module('housyApp')
                     pendingRequests.cancelAll();
                 }
                 //set the loading status
-                $rootScope.loadingStatus = 'loading';
+                $rootScope.loadingStatus = uiData.showLoading?'loading':'';
 
                 if (requestData.data.isPatientId) { //set the patient id before calling the api if api needs the patientid
                     //if patient is there in session storage then use the id of patient from session
