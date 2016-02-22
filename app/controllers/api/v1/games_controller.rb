@@ -131,25 +131,39 @@ class Api::V1::GamesController < Api::V1::BaseController
 			@elemt  = []
 			displayed_elements = Room.find(params[:room_id].to_i).num_array_to_pass[0..current_index]
 			puts "====Total Array===#{Room.find(params[:room_id]).num_array_to_pass.inspect}"
-			puts "========Displayed Array======#{displayed_elements.inspect}"
-			winning_part = WinningPart.find(params[:winning_part_id])
-			elements_to_find.each_with_index do |element,index|
-				puts "---------------------------elemt-------#{element}"
-				if displayed_elements.include?element
-					if index == elements_to_find.count - 1
-						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
-						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)		
+			puts "========DisPayed Array======#{displayed_elements.inspect}"
+			if params[:winning_part_id] == 0
+				@room = Room.find(params[:room_id])
+				elements_to_find.each_with_index do |element,index|
+					if displayed_elements.include?element
+						@current_user.winners.build(:winning_part_id => 0 ,:room_id => params[:room_id]).save
+						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
+					else
+						puts "=================element not found"
+						@elemt << element
+						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) 
+					end
+			else
+				winning_part = WinningPart.find(params[:winning_part_id])
+				elements_to_find.each_with_index do |element,index|
+					puts "---------------------------elemt-------#{element}"
+					if displayed_elements.include?element
+						if index == elements_to_find.count - 1
+							@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
+							render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
+						else
+							@elemt << element
+							render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json)
+						end	
+					else
+						puts "=================element not found"
+						@elemt << element
+						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}"}}.to_json) if (index == elements_to_find.count - 1)
 					end	
-				else
-					puts "=================element not found"
-					@elemt << element
-					render_json({:errors => "Winning part not completed properly due to elemets #{@elem}"}.to_json) if (index == elements_to_find.count - 1)
-				end	
-			end	
-
-			
+				end		
+			end			
 		else
-			render_json({:errors => "No user found with authentication_token = #{params[:authentication_token]}"}.to_json)
+			render_json({:result => {:errors => "No user found with authentication_token = #{params[:authentication_token]}"}}.to_json)
 		end
 	end	
 
