@@ -132,7 +132,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 			displayed_elements = Room.find(params[:room_id].to_i).num_array_to_pass[0..current_index]
 			puts "====Total Array===#{Room.find(params[:room_id]).num_array_to_pass.inspect}"
 			puts "========DisPayed Array======#{displayed_elements.inspect}"
-			if element_to_find == current_index 
+			if elements_to_find.count == current_index 
 				if params[:winning_part_id].to_i == 0
 					elements_to_find.each_with_index do |element,index|
 				
