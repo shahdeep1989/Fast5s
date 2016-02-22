@@ -140,37 +140,28 @@ class Api::V1::GamesController < Api::V1::BaseController
 			puts "========DisPayed Array======#{displayed_elements.inspect}"
 			# if elements_to_find.count == current_index 
 				puts "=============================AHIYAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-			winning_part = WinningPart.find(params[:winning_part_id])
+			
 				if params[:winning_part_id].to_i == 0
-					elements_to_find.each do |element|
-						puts "---------------------------elemt-------#{element}"
-						if displayed_elements.include? element
-							@counter = @counter + 1
-						end
-					end	
-					if @counter == elements_to_find.size
+					displayed_elements - elements_to_find
+					elements_to_find - displayed_elements
+					if !(elements_to_find - displayed_elements).empty?
 						@current_user.winners.build(:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed fullhouse game successfully" }}.to_json)			
 					else
-						puts "=================element not found"
 						@elemt << element
-       			render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json)
-					end	
+						render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json)
+					end
 				else
-					elements_to_find.each do |element|
-						puts "---------------------------elemt-------#{element}"
-						if displayed_elements.include? element
-							@counter = @counter + 1
-						end
-					end		
-					if @counter == elements_to_find.size
+					winning_part = WinningPart.find(params[:winning_part_id])
+					displayed_elements - elements_to_find
+					elements_to_find - displayed_elements
+					if !(elements_to_find - displayed_elements).empty?
 						@current_user.winners.build(:winning_part_id => winning_part.id,:room_id => params[:room_id]).save
 						render_json({:result=>{:messages =>"Ok",:rstatus=>1, :errorcode =>""},:data=>{:messages =>"you completed #{winning_part.text_panel} successfully" }}.to_json)			
 					else
-						puts "=================element not found"
 						@elemt << element
 						render_json({:result =>{:errors => "Winning part not completed properly due to elemets #{@elem}",:disqualify => true}}.to_json)
-					end	
+					end
 				end
 			# else
 			# 	render_json({:result => {:errors => "Winning part not completed properly due to elemets #{@elem}" ,:disqualify => true}}.to_json)
