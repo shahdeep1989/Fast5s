@@ -30,9 +30,9 @@
                   <tr>
                     <th>Winner Name</th>
                     <th>Winner Email</th>
-                    <th>Game</th>
-                    <th>Game Start Time</th>
+                    <th>Game</th>    
                     <th>Winning Part</th>
+                     <th>Game Start Time</th>
                   </tr>
                 </thead>
 
@@ -42,8 +42,13 @@
                       <td><%= winner.user.full_name %></td>
                       <td><%= winner.user.email %></td>
                       <td><%= winner.winning_part.try(:game).try(:name) %></td>
-                      <td><%= winner.room.created_at + 5.minutes %></td>
-                      <td><%= winner.winning_part.text_panel %></td>
+                      <% if winner.winning_part.id == 0  %>
+                        <td>FullHouse</td>
+                      <% else %>     
+                        <td><%= winner.winning_part.text_panel %></td>
+                      <% end %>          
+                      <td><%= (winner.room.created_at + 5.minutes).strftime("%d-%m-%Y %H:%M") %></td>
+                    
                     </tr>
                   <% end %>
                 </tbody>
