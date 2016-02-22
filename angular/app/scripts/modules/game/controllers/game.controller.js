@@ -12,7 +12,7 @@
     .module('housyApp')
     .controller('gameCtrl',gameCtrl);
   gameCtrl.$inject = ['$scope','gameService','$stateParams','$timeout','$interval','$mdDialog','$state','$mdToast','$document'];
-  function gameCtrl($scope,gameService,$stateParams,$timeout,$interval,$mdDialog,$state,$mdToast,$document) {
+  function gameCtrl($scope,gameService,$stateParams,$timeout,$interval,$mdDialog,$state,$mdToast) {
     var vm = this;
     vm.game = $stateParams.game;
     vm.room = null;
@@ -20,6 +20,7 @@
     vm.ticketNumbers = [];
     vm.numberInterval= null;
     vm.displayInterval = null;
+    vm.timeOutStarter = null;
     vm.currentHead = 0;
     vm.winnigParts = [];
     vm.getNumber = getNumber;
@@ -64,7 +65,7 @@
         vm.startsAfter = Math.abs(then.diff(now));
 
         //time out for the fist start up
-        $timeout(function(){
+        vm.timeOutStarter = $timeout(function(){
           setParticipants();
           vm.getNumber();
           vm.numberInterval = $interval(function(){ //interval after the first time out
@@ -200,7 +201,9 @@
                       .title('Alert')
                       .textContent('You have claimed wrong entry, you are disqualified')
                       .ok('Got it!')
-                  );
+                  ).then(function(){
+                      $state.go('home');
+                  })
                 }
               })
               .success(function(data){
@@ -221,6 +224,7 @@
     $scope.$on('$destroy',function(){
         $interval.cancel(vm.numberInterval);
         $interval.cancel(vm.displayInterval);
+        $timeout.cancel(vm.timeOutStarter);
         console.log('destroying the interval');
     });
   }

@@ -11,8 +11,8 @@
     angular
     .module('housyApp')
     .factory('gameService',gameService);
-    gameService.$inject = ['appHttp','$localStorage','$rootScope','$state','$q'];
-    function gameService(appHttp,$localStorage,$rootScope,$state,$q) {
+    gameService.$inject = ['appHttp'];
+    function gameService(appHttp) {
         return {
              getGames:getGames,
              getTicket:getTicket,

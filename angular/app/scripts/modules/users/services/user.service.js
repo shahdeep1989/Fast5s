@@ -11,8 +11,8 @@
     angular
     .module('housyApp')
     .factory('userService',userService);
-    userService.$inject = ['appHttp','$localStorage','$rootScope','$state','$q'];
-    function userService(appHttp,$localStorage,$rootScope,$state,$q) {
+    userService.$inject = ['appHttp','$localStorage','$rootScope','$state','$q','$mdToast'];
+    function userService(appHttp,$localStorage,$rootScope,$state,$q,$mdToast) {
         return {
             login:login,
             changePassword:changePassword,
@@ -40,6 +40,14 @@
                 data:data,
                 url:'change_password',
                 successToast:true
+            }).success(function(){
+              $state.go('home')
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Password is changed successfully')
+                  .position('bottom right')
+                  .hideDelay(6000)
+              );
             })
         }
 
@@ -85,6 +93,12 @@
             }).success(function(data){
                 data.data.auth_token = $rootScope.user.auth_token
                 setProfile(data);
+                $mdToast.show(
+                  $mdToast.simple()
+                    .textContent('Profile is edited successfully')
+                    .position('bottom right')
+                    .hideDelay(6000)
+                );
             })
         }
 
