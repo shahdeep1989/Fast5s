@@ -65,6 +65,6 @@ class  Admin::GamesController <  Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def games_params
-        params.require(:game).permit( :name ,:game_type ,:interval_sec ,:total_number_in_ticket ,:num_of_player,:game_image , winning_parts_attributes: [:id, :text_panel, :num_of_element ,:part_color, :_destroy])
+        params.require(:game).permit( :name ,:game_type ,:interval_sec ,:total_number_in_ticket ,:num_of_player,:game_image ,:description , winning_parts_attributes: [:id, :text_panel, :num_of_element ,:part_color, :_destroy])
     end
 end

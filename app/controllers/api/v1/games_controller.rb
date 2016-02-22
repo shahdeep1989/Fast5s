@@ -84,7 +84,7 @@ class Api::V1::GamesController < Api::V1::BaseController
 				@room = @current_user.tickets.find_by(:room_id => params[:room_id]).room
 				if @room.present?
 					if @room.num_array_to_pass.present?
-						if params[:current_head].to_i == 100	
+						if params[:current_head].to_i == 10	
 	 						render_json({:result=>{ :errors => "Game is over"}}.to_json)
 	 					else
 							@number = @room.num_array_to_pass[params[:current_head].to_i]
