@@ -24,8 +24,11 @@ class Api::V1::GamesController < Api::V1::BaseController
 			if @rooms.present?
 				puts "=====================+Room Present+====#{@rooms.first.tickets.count}=================="
 				@room = @rooms.first
-				@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
-				@ticket.save
+				@user = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@user.present?
+					@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+					@ticket.save
+				end
 				puts "==================Ticket=========#{@ticket.inspect}"
 				if @rooms.first.tickets.count == @game.num_of_player
 					@rooms.first.status = "Deactive"
@@ -34,10 +37,13 @@ class Api::V1::GamesController < Api::V1::BaseController
 				end
 			else
 				puts "===============+New Room+=================="
-        generate_rooms
-        @ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
-        @ticket.save
-        puts "==================Ticket=========#{@ticket.inspect}"
+		        generate_rooms
+		        @user = @room.tickets.find_by(:user_id => @current_user.id)
+				if !@user.present?
+		        	@ticket = @room.tickets.build(:user_id => @current_user.id ,:num_array => generate_tickets(limit))
+		        	@ticket.save
+		        end
+		        puts "==================Ticket=========#{@ticket.inspect}"
 			end
 			@part_counts = @room.game.winning_parts.map(&:num_of_element)
 
@@ -109,7 +115,6 @@ class Api::V1::GamesController < Api::V1::BaseController
 		@token = AuthenticationToken.current_authentication_token_for_user(@current_user.id,params[:authentication_token]).first
 		if @token.present?
 			@tickets =  Ticket.where(:room_id => params[:room_id].to_i)
-
 			puts "-------------#{@tickets.count}"
 			if !@tickets.present?
 				render_json({:errors => "sorry room is not found"}.to_json)
